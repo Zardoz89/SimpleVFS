@@ -8,7 +8,7 @@
 module dgamevfs.test;
 
 
-import dgamevfs._;
+import dgamevfs;
 
 
 import std.algorithm;
@@ -27,7 +27,7 @@ bool fail(D)(D dg) if(isDelegate!D)
     return false;
 }
 
-bool testVFSFileInfo(VFSDir parent, string name, 
+bool testVFSFileInfo(VFSDir parent, string name,
                        Flag!"exists" exists, Flag!"writable" writable)
 {
     auto file = parent.file(name);
@@ -92,7 +92,7 @@ bool testVFSFileSeek(VFSDir parent, string name)
     {
         auto output = file.output;
         output.write(cast(const void[])"Teh smdert iz");
-        if(!fail({output.seek(-4, Seek.Set);}) || 
+        if(!fail({output.seek(-4, Seek.Set);}) ||
            !fail({output.seek(4, Seek.End);}))
         {
             return false;
@@ -108,12 +108,12 @@ bool testVFSFileSeek(VFSDir parent, string name)
     }
     {
         auto input = file.input;
-        if(!fail({input.seek(-4, Seek.Set);}) || 
+        if(!fail({input.seek(-4, Seek.Set);}) ||
            !fail({input.seek(4, Seek.End);}))
         {
             return false;
         }
-        
+
         auto buffer = new char[3];
         input.read(cast(void[])buffer);
         if(buffer != "The"){return false;}
@@ -147,7 +147,7 @@ bool testVFSDirFiles(VFSDir dir, Flag!"deep" deep)
     foreach(file; dir.files(deep))
     {
         auto sepsAdded = count(file.path, '/') - count(dir.path, '/');
-        if(sepsAdded < 1){return false;} 
+        if(sepsAdded < 1){return false;}
         if(!file.exists){return false;}
     }
     return true;
@@ -158,7 +158,7 @@ bool testVFSDirDirs(VFSDir dir, Flag!"deep" deep)
     foreach(sub; dir.dirs(deep))
     {
         auto sepsAdded = count(sub.path, '/') - count(dir.path, '/');
-        if(sepsAdded < 1){return false;} 
+        if(sepsAdded < 1){return false;}
         if(!sub.exists){return false;}
     }
     return true;
@@ -189,7 +189,7 @@ bool testVFSDirContents(VFSDir dir, string[] expectedFiles, string[] expectedDir
     }
     if(expectedFiles.length > 0 || expectedDirs.length > 0)
     {
-        writeln("FAILED file/directory iteration (unexpected files, dirs: ", 
+        writeln("FAILED file/directory iteration (unexpected files, dirs: ",
                  expectedFiles, expectedDirs, ")");
         //Missing file/directory.
         return false;
@@ -225,13 +225,13 @@ bool testVFSDirGlob(VFSDir root)
         }
         foreach(subfile; filesCreate)
         {
-            file(subfile).output.write(cast(const void[])"42"); 
+            file(subfile).output.write(cast(const void[])"42");
         }
 
         //Containing font:
-        auto fontDirs   = ["root/fonts", 
-                           "root/fonts/ttf", 
-                           "root/fonts/otf", 
+        auto fontDirs   = ["root/fonts",
+                           "root/fonts/ttf",
+                           "root/fonts/otf",
                            "root/fonts/extra"];
         auto fontFiles  = ["root/fonts/config.txt",
                            "root/fonts/ttf/a.ttf",
@@ -254,8 +254,8 @@ bool testVFSDirGlob(VFSDir root)
 
         //Ending with .txt:
         auto txtDirs    = cast(string[])[];
-        auto txtFiles   = ["root/fonts/config.txt", 
-                           "root/fonts/ttf/info.txt", 
+        auto txtFiles   = ["root/fonts/config.txt",
+                           "root/fonts/ttf/info.txt",
                            "root/fonts/otf/otf.txt",
                            "root/shaders/extra/info.txt"];
 
@@ -288,7 +288,7 @@ bool testVFSDirMain(VFSDir root)
     string answer = "The answer is 42.";
 
     //Nonexistent file:
-    if(!testVFSFileInfo(root, "file1", No.exists, Yes.writable) || 
+    if(!testVFSFileInfo(root, "file1", No.exists, Yes.writable) ||
        !testVFSFileIO(root, "file1", answer))
     {
         writeln("FAILED nonexistent file");
@@ -329,12 +329,12 @@ bool testVFSDirMain(VFSDir root)
         foreach(char f; '1' .. '9')
         {
             auto fname = "file" ~ f;
-            if(!testVFSFileInfo(sub, fname, No.exists, Yes.writable) || 
+            if(!testVFSFileInfo(sub, fname, No.exists, Yes.writable) ||
                !testVFSFileIO(sub, fname, answer))
             {
                 writeln("FAILED creating files in subdirectories");
                 return false;
-            }        
+            }
         }
     }
 
@@ -391,7 +391,7 @@ bool testVFSDirMain(VFSDir root)
         writeln("FAILED globbing");
         return false;
     }
- 
+
     //created before
     auto sub = root.dir("sub1");
     //files()/dirs() from a subdir:
@@ -403,7 +403,7 @@ bool testVFSDirMain(VFSDir root)
     }
 
     //We added some files to subdirs, so files().length should be less that files(Yes.deep).length:
-    if(root.files().length >= root.files(Yes.deep).length || 
+    if(root.files().length >= root.files(Yes.deep).length ||
        root.dirs().length >= root.dirs(Yes.deep).length)
     {
         writeln("FAILED file/directory iteration item count");
@@ -488,7 +488,7 @@ bool testStackDirMount()
     {
         writeln("FAILED mounting a dir with same name");
         return false;
-    } 
+    }
 
     return true;
 }
@@ -672,7 +672,7 @@ bool testFSDir()
     if(!fsDir.writable || fsDir.exists ||
        fsDir.path != fsDir.name || fsDir.path != "root")
     {
-        writeln(cast(bool)fsDir.writable, " ", fsDir.exists, " ", 
+        writeln(cast(bool)fsDir.writable, " ", fsDir.exists, " ",
                 fsDir.path, " ", fsDir.name);
         writeln("FAILED FSDir info");
         return false;

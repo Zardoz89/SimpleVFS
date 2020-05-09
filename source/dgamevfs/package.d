@@ -5,7 +5,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 
-module dgamevfs._;
+module dgamevfs;
 
 public import dgamevfs.exceptions;
 public import dgamevfs.fs;
