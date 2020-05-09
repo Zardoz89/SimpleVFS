@@ -1,0 +1,3167 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>dgamevfs.vfs</title>
+    <style type="text/css" media="screen">
+      html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p,
+      blockquote, pre, a, abbr, address, cite, code, del, dfn, em, figure,
+      img, ins, kbd, q, s, samp, small, strong, sub, sup, var, b, u, i, dl,
+      dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption,
+      tbody, tfoot, thead, tr, th, td {
+        background: transparent none repeat scroll 0 0;
+        border: 0 none;
+        font-size: 100%;
+        margin: 0;
+        outline: 0 none;
+        padding: 0;
+        vertical-align: baseline;
+      }
+
+      h1 { font-size: 200%; }
+      h2 { font-size: 160%; }
+      h3 { font-size: 120%; }
+      h4 { font-size: 100%; }
+      h5 { font-size: 80%; }
+      h6 { font-size: 80%; font-weight: normal; }
+
+      ul, ol {
+        margin: 1.4em 0;
+      }
+      ul ul, ol ol, ul ol, ol ul {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+      ul, ol {
+        margin-left: 2.8em;
+      }
+
+      ol {
+        list-style: decimal;
+      }
+      ol ol {
+        list-style: lower-alpha;
+      }
+      ol ol ol {
+        list-style: lower-roman;
+      }
+      ol ol ol ol {
+        list-style: decimal;
+      }
+
+      blockquote {
+        margin: 0.1em;
+        margin-left: 1em;
+        border-left: 2px solid #cccccc;
+        padding-left: 0.7em;
+      }
+
+      .color_red { color: #dc322f; }
+      .color_blue { color: #268bd2; }
+      .color_green { color: #859901; }
+      .color_yellow { color: #b58901; }
+      .color_black { color: black; }
+      .color_white { color: white; }
+
+      .font_big {
+        font-size: 1.2em;
+      }
+
+      .ddoc_section_h {
+        font-weight: bold;
+        font-size: 13px;
+        line-height: 19.5px;
+        margin-top: 11px;
+        display: block;
+      }
+
+      body.dlang .dlang {
+        display: inline-block;
+      }
+
+      body.dlang .declaration .dlang {
+          display: block;
+      }
+
+      body.dlang .ddoc_header_anchor a.dlang {
+        display: block;
+        color: rgba(0, 136, 204, 1);
+        text-decoration: none;
+      }
+
+      body.dlang .ddoc_header_anchor .code {
+        color: rgba(0, 136, 204, 1);
+      }
+
+      #ddoc_main .module {
+          border-color: currentColor rgba(233, 233, 233, 1) rgba(233, 233, 233, 1);
+          border-style: none solid solid;
+          border-width: 0 1px 1px;
+          overflow-x: hidden;
+          padding: 15px;
+      }
+
+      #ddoc_main .section .section {
+        margin-top: 0;
+      }
+
+      #ddoc_main .ddoc_module_members_section {
+          padding: 1px 0 0;
+          transition: transform 0.3s ease 0s;
+      }
+
+      #ddoc_main .ddoc_member, #ddoc_main .ddoc_module_members section.intro {
+          background: #fff none repeat scroll 0 0;
+          list-style-type: none;
+          width: 100%;
+      }
+
+      #ddoc_main .ddoc_header_anchor {
+          font-size: 1.4em;
+          transition: transform 0.3s ease 0s;
+      }
+
+      #ddoc_main .ddoc_header_anchor > .code {
+          display: inline-block;
+
+      }
+
+      #ddoc_main .ddoc_decl {
+        background-color: transparent;
+        height: 100%;
+        left: 0;
+        top: 0;
+        padding: 0;
+        padding-left: 15px;
+      }
+
+      #ddoc_main .ddoc_decl .section, #ddoc_main .section.ddoc_sections {
+        background: white none repeat scroll 0 0;
+        margin: 0;
+        padding: 5px;
+        position: relative;
+        border-radius: 5px;
+      }
+
+      #ddoc_main .ddoc_decl .section h4:first-of-type, #ddoc_main .section.ddoc_sections h4:first-of-type {
+        font-size: 13px;
+        line-height: 1.5;
+        margin-top: 21px;
+      }
+
+      #ddoc_main .section .declaration {
+          margin-top: 21px;
+      }
+
+      #ddoc_main .section .declaration .code {
+          color: rgba(0, 0, 0, 1);
+          margin-bottom: 15px;
+          padding-bottom: 6px;
+      }
+
+      #ddoc_main .declaration div .para {
+          margin-bottom: 0;
+      }
+
+      #ddoc_main .ddoc_params .graybox tr td:first-of-type {
+        padding: 7px;
+        text-align: right;
+        vertical-align: top;
+        word-break: normal;
+        white-space: nowrap;
+      }
+
+      #ddoc_main .ddoc_params .graybox {
+        border: 0 none;
+      }
+
+      #ddoc_main .ddoc_params .graybox td {
+        border-color: rgba(214, 214, 214, 1);
+      }
+
+      #ddoc_main .ddoc_params .graybox tr:first-child > td {
+        border-top: 0 none;
+      }
+
+      #ddoc_main .ddoc_params .graybox tr:last-child > td {
+        border-bottom: 0 none;
+      }
+
+      #ddoc_main .ddoc_params .graybox tr > td:first-child {
+        border-left: 0 none;
+      }
+
+      #ddoc_main .ddoc_params .graybox tr > td:last-child {
+        border-right: 0 none;
+        width: 100%;
+      }
+
+      #ddoc_main em.term, #ddoc_main em.term .code {
+        color: rgba(65, 65, 65, 1);
+        font-size: 12px;
+        font-style: italic;
+        line-height: 1.5;
+      }
+
+      #ddoc_main .see-also {
+        cursor: pointer;
+        font-family: Menlo,monospace;
+      }
+
+      #ddoc_main .ddoc_decl .section > div:last-of-type {
+        margin-bottom: 15px;
+      }
+
+      #ddoc_main .ddoc_member, #ddoc_main .ddoc_module_members {
+          transition: transform 0.3s ease 0s;
+      }
+
+      #ddoc_main .code_sample {
+        background: inherit;
+      }
+
+      #ddoc_main .declaration .code-line {
+          display: block;
+          font: 1em Menlo,monospace;
+      }
+
+      #ddoc_main a[name] {
+        margin: -112px 0 0;
+        padding-top: 112px;
+      }
+
+      #ddoc_main .ddoc_decl td {
+        max-width: inherit;
+      }
+
+      #ddoc_main .declaration a {
+        color: inherit;
+      }
+
+      #ddoc_main .declaration a:hover {
+          color: rgba(0, 136, 204, 1);
+          text-decoration: underline;
+      }
+
+      body.ddoc {
+        background-color: transparent;
+        color: rgba(0, 0, 0, 1);
+        font-family: Helvetica,Arial,sans-serif;
+        font-size: 62.5%;
+        margin: 0;
+        border: 0;
+        left: 0;
+        top: 0;
+        padding: 0;
+      }
+
+      .ddoc a[name] {
+        display: block;
+        height: 0;
+        margin: -85px 0 0;
+        padding-top: 85px;
+        width: 0;
+      }
+
+      .ddoc .module {
+          border-color: transparent;
+          background-color: rgba(255, 255, 255, 1);
+          border-color: currentColor rgba(233, 233, 233, 1) rgba(233, 233, 233, 1);
+          border-image: none;
+          border-style: none solid solid;
+          border-width: 0 1px 1px;
+          box-shadow: 0 0 1px rgba(0, 0, 0, 0.07);
+          display: block;
+          margin-left: 0;
+          min-height: calc(100% - 173px);
+          overflow: auto;
+          padding-bottom: 100px;
+      }
+
+      .ddoc .content_wrapper {
+          background-color: rgba(242, 242, 242, 1);
+          margin: 0 auto;
+          max-width: 980px;
+      }
+
+      .ddoc .section {
+        padding: 15px 25px 30px;
+      }
+
+      .ddoc .section .section {
+        margin: 30px 0 0;
+        padding: 0;
+      }
+
+      .ddoc .para {
+        color: rgba(65, 65, 65, 1);
+        font-size: 1.4em;
+        line-height: 145%;
+        margin-bottom: 15px;
+      }
+
+      .ddoc .ddoc_examples .para {
+        margin-bottom: 0;
+      }
+
+      .ddoc .module_name {
+          color: rgba(0, 0, 0, 1);
+          display: block;
+          font-family: Helvetica;
+          font-size: 2.8em;
+          font-weight: 100;
+          margin-bottom: 0;
+          padding: 15px 0;
+      }
+
+      .ddoc .module a {
+          color: rgba(0, 136, 204, 1);
+          text-decoration: none;
+      }
+
+      .ddoc .code {
+        color: rgba(128, 128, 128, 1);
+        font-family: Menlo,monospace;
+        font-size: 0.85em;
+        word-wrap: break-word;
+      }
+
+      .ddoc .code i {
+        font-style: normal;
+      }
+
+      .ddoc .code .code {
+        font-size: 1em;
+      }
+
+      .ddoc .code_sample {
+        background-clip: padding-box;
+        margin: 1px 0;
+        text-align: left;
+      }
+
+      .ddoc .code_sample {
+        display: block;
+        font-size: 1.4em;
+        margin-left: 21px;
+      }
+
+      .ddoc ol .code_sample {
+        font-size: 1em;
+      }
+
+      .ddoc .code_lines {
+        counter-reset: li;
+        line-height: 1.6em;
+        list-style: outside none none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .ddoc .code_listing .code_sample div {
+        margin-left: 13px;
+        width: 93%;
+      }
+
+      .ddoc .code_listing .code_sample div .code_lines li {
+        list-style-type: none;
+        margin: 0;
+        padding-right: 10px;
+      }
+
+      .ddoc .code_sample div .code_lines li::before {
+        margin-left: -33px;
+        margin-right: 25px;
+      }
+
+      .ddoc .code_sample div .code_lines li:nth-child(n+10)::before {
+        margin-left: -39px;
+        margin-right: 25px;
+      }
+
+      .ddoc .code_sample div .code_lines li:nth-child(n+100)::before {
+        margin-left: -46px;
+        margin-right: 25px;
+      }
+
+      .ddoc .code_sample .code_lines .code {
+        color: #000;
+      }
+
+      .ddoc div.dlang {
+        margin: 10px 0 21px;
+        padding: 4px 0 2px 10px;
+      }
+
+      .ddoc div.dlang {
+          margin: 10px 0 21px;
+          padding: 4px 0 2px 10px;
+      }
+
+      .ddoc div.dlang {
+        border-left: 5px solid rgba(0, 155, 51, 0.2);
+      }
+
+      .ddoc .code_lines li::before {
+        color: rgba(128, 128, 128, 1);
+        content: counter(li, decimal);
+        counter-increment: li;
+        font-family: Menlo,monospace;
+        font-size: 0.9em;
+        margin-right: 16px;
+      }
+
+      .ddoc .code_lines li {
+        padding-left: 0;
+        white-space: pre-wrap;
+      }
+
+      .ddoc .code_lines li:only-of-type::before {
+        color: rgba(255, 255, 255, 1);
+        content: " ";
+      }
+
+      .ddoc .code_lines li:only-of-type {
+        color: rgba(255, 255, 255, 1);
+        content: " ";
+      }
+
+      .ddoc .code_lines li:nth-child(n+10) {
+        text-indent: -17px;
+      }
+
+      .ddoc .code_lines li:nth-child(n+10)::before {
+        margin-right: 12px;
+      }
+
+      .ddoc .graybox {
+        border: 1px solid rgba(233, 233, 233, 1);
+        border-collapse: collapse;
+        border-spacing: 0;
+        empty-cells: hide;
+        margin: 20px 0 36px;
+        text-align: left;
+      }
+
+      .ddoc .graybox p {
+        margin: 0;
+        min-width: 50px;
+      }
+
+      .ddoc th {
+        margin: 0;
+        max-width: 260px;
+        padding: 5px 10px 5px 10px;
+        vertical-align: bottom;
+      }
+
+      .ddoc td {
+        border: 1px solid rgba(233, 233, 233, 1);
+        margin: 0;
+        max-width: 260px;
+        padding: 5px 10px 5px 10px;
+        vertical-align: middle;
+      }
+
+      .punctuation {
+        color: rgba(0, 0, 0, 1);
+      }
+
+      .comment {
+        color: rgba(0, 131, 18, 1);
+      }
+
+      .operator {
+        color: #000;
+      }
+
+      .keyword {
+        color: rgba(170, 13, 145, 1);
+      }
+
+      .keyword_type {
+        color: rgba(170, 51, 145, 1);
+      }
+
+      .string_literal {
+        color: rgba(196, 26, 22, 1);
+      }
+
+      .ddoc_psuper_symbol {
+        color: rgba(92, 38, 153, 1);
+      }
+
+      .param {
+        color: rgba(0, 0, 0, 1);
+      }
+
+      .psymbol {
+        color: rgba(0, 0, 0, 1);
+      }
+
+      .ddoc_member_header .ddoc_header_anchor .code {
+        font-size: 1em;
+      }
+    </style>
+  </head>
+  <body id="ddoc_main" class="ddoc dlang">
+    <div class="content_wrapper">
+      <article class="module">
+        <h1 class="module_name">dgamevfs.vfs</h1>
+        <section id="module_content">
+<section class="section ddoc_module_members_section">
+  <div class="ddoc_module_members">
+    <ul class="ddoc_members">
+  <li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSDir" id="VFSDir"><code class="code">VFSDir</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSDir"></span>abstract class <code class="code">VFSDir</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    A directory in the VFS.
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    Provides basic directory information and access to files and
+ subdirectories within the directory.
+<br><br>
+ Directory names in the VFS can contain any characters except <b>/</b>,
+ which is used as directory separator, and the <b>::</b> sequence, which is
+ used for explicit package lookup (see  ).
+
+
+  </p>
+</div>
+<div class="ddoc_examples">
+  <h4>Examples</h4>
+  <p class="para">
+    
+<section class="code_listing">
+  <div class="code_sample">
+    <div class="dlang">
+      <ol class="code_lines">
+        <li><code class="code"><span class="comment">//Construct the directory (ordinary physical file system directory in this case):
+</span><span class="psymbol">VFSDir</span> dir = <span class="keyword">new</span> FSDir(<span class="string_literal">"main"</span>, <span class="string_literal">"./user_data/main"</span>, Yes.writable);
+
+<span class="comment">//Print information about the directory:
+</span>writeln(<span class="string_literal">"name: "</span>, dir.name,
+        <span class="string_literal">", full path: "</span>, dir.path,
+        <span class="string_literal">", writable: "</span>, dir.writable,
+        <span class="string_literal">", exists: "</span>, dir.exists);
+
+<span class="comment">//Access a file. If it does not exist, it will be created when writing:
+</span><span class="keyword">auto</span> file = dir.file(<span class="string_literal">"logs/memory.log"</span>);
+
+<span class="comment">//Access a subdirectory:
+</span><span class="keyword">auto</span> shaders = dir.dir(<span class="string_literal">"shaders"</span>);
+
+<span class="comment">//Create a subdirectory. If the directory exists, nothing happens (no error):
+</span><span class="keyword">auto</span> shaders = dir.dir(<span class="string_literal">"does_not_exist"</span>).create();
+
+
+<span class="comment">//dirs() and files() methods can be used to get ranges of files and subdirectories:
+</span>
+<span class="comment">//Print paths of all immediate subdirectories and their files:
+</span><span class="keyword">foreach</span>(subdir; dir.dirs())
+{
+    writeln(dir.path, <span class="string_literal">":"</span>);
+    <span class="keyword">foreach</span>(file; subdir.files())
+    {
+        writeln(<span class="string_literal">"    "</span>, file.path);
+    }
+}
+
+<span class="comment">//Print paths of all subdirectories and their subdirectories, etc. recursively:
+</span><span class="keyword">foreach</span>(subdir; dir.dirs(Yes.deep))
+{
+    writeln(dir.path);
+}
+
+<span class="comment">//Glob patterns can be used to filter the results:
+</span>
+<span class="comment">//Print paths of all immediate subdirectories with paths containg "doc":
+</span><span class="keyword">foreach</span>(subdir; dir.dirs(No.deep, <span class="string_literal">"*doc*"</span>))
+{
+    writeln(dir.path);
+}
+
+<span class="comment">//Print paths of all files in the directory and in subdirectories with paths ending with ".txt":
+</span><span class="keyword">foreach</span>(file; dir.files(Yes.deep, <span class="string_literal">"*.txt"</span>))
+{
+    writeln(file.path);
+}
+</code></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+  </p>
+</div>
+</section>
+<ul class="ddoc_members">
+  <li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSDir.name" id="VFSDir.name"><code class="code">name</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSDir.name"></span>final const pure nothrow @nogc @property @safe string <code class="code">name</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Get the name of this directory.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSDir.path" id="VFSDir.path"><code class="code">path</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSDir.path"></span>final const pure nothrow @property @safe string <code class="code">path</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Get full path of this directory in the VFS.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSDir.writable" id="VFSDir.writable"><code class="code">writable</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSDir.writable"></span>const pure nothrow @nogc @property @safe bool <code class="code">writable</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Is it possible to write to the directory?
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSDir.exists" id="VFSDir.exists"><code class="code">exists</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSDir.exists"></span>const nothrow @property @safe bool <code class="code">exists</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Does the directory exist?
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSDir.file" id="VFSDir.file"><code class="code">file</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSDir.file"></span>VFSFile <code class="code">file</code>(string <code class="code">path</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Get file with specified path in the directory.
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    The file will be returned even if it does not exist -
+ it will be created when writing into it.
+
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">string <code class="code">path</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      Path of the file to get.
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+<div class="ddoc_throws">
+  <h4>Throws</h4>
+  <p class="para">
+     if the directory does not exist
+          or the file is in a nonexistent subdirectory.
+<br><br>
+           if the path is invalid.
+
+
+  </p>
+</div><div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    File with specified path.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSDir.dir" id="VFSDir.dir"><code class="code">dir</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSDir.dir"></span>@safe VFSDir <code class="code">dir</code>(string <code class="code">path</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Get a subdirectory with specified path in the directory.
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    The subdirectory will be returned even if it does not exist -
+ it can be created with the  method.
+
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">string <code class="code">path</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      Path of the subdirectory to get.
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+<div class="ddoc_throws">
+  <h4>Throws</h4>
+  <p class="para">
+     if this VFSDir does not exist
+          or the subdirectory is in a nonexistent subdirectory.
+<br><br>
+           if the path is invalid.
+
+
+  </p>
+</div><div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Subdirectory with specified path.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSDir.files" id="VFSDir.files"><code class="code">files</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSDir.files"></span>@safe VFSFiles <code class="code">files</code>(Flag!"<code class="code">deep</code>" <code class="code">deep</code> = No.<code class="code">deep</code>, string <code class="code">glob</code> = null);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Get a range of files in the directory.
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">Flag!"<code class="code">deep</code>" <code class="code">deep</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      If <code class="code">true</code>, recursively get files in subdirectories.
+                 Otherwise only get files directly in this directory.
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">string <code class="code">glob</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      Glob pattern used to filter the results.
+                 If <code class="code">null</code> (default), all files will be returned.
+                 Otherwise only files whose VFS paths within this
+                 directory match <code class="code">glob</code> (case sensitive) will be
+                 returned. Some characters of glob patterns
+                 have special meanings: For instance, <i>*.txt</i>
+                 matches any path ending with the <b>.txt</b> extension.
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+<div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Range of the files.
+
+
+  </p>
+</div>
+<div class="ddoc_throws">
+  <h4>Throws</h4>
+  <p class="para">
+     if the directory does not exist.
+
+
+  </p>
+</div><div class="ddoc_see_also">
+  <h4>See Also</h4>
+  <p class="para">
+    <a href="http://en.wikipedia.org/wiki/Glob_%28programming%29">Wikipedia: glob (programming)</a>
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSDir.dirs" id="VFSDir.dirs"><code class="code">dirs</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSDir.dirs"></span>@safe VFSDirs <code class="code">dirs</code>(Flag!"<code class="code">deep</code>" <code class="code">deep</code> = No.<code class="code">deep</code>, string <code class="code">glob</code> = null);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Get a range of subdirectories.
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">Flag!"<code class="code">deep</code>" <code class="code">deep</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      If <code class="code">true</code>, recursively get all subdirectories.
+                 Otherwise just get subdirectories of this directory.
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">string <code class="code">glob</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      Glob pattern used to filter the results.
+                 If <code class="code">null</code> (default), all subdirectories will be
+                 returned. Otherwise only subdirectories whose VFS
+                 paths within this directory match <code class="code">glob</code>
+                 (case sensitive) will be returned. Some characters of
+                 glob patterns have special meanings: For instance,
+                 <i>*.txt</i> matches any path ending with the <b>.txt</b>
+                 extension.
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+<div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Range of the directories.
+
+
+  </p>
+</div>
+<div class="ddoc_throws">
+  <h4>Throws</h4>
+  <p class="para">
+     if the directory does not exist.
+  </p>
+</div>
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSDir.create" id="VFSDir.create"><code class="code">create</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSDir.create"></span>final @safe void <code class="code">create</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Create the directory if it does not exist (otherwise do nothing).
+
+  </p>
+</div>
+<div class="ddoc_throws">
+  <h4>Throws</h4>
+  <p class="para">
+     if the directory could not be created.
+  </p>
+</div>
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSDir.remove" id="VFSDir.remove"><code class="code">remove</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSDir.remove"></span>@system void <code class="code">remove</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Remove the directory if it exists (otherwise do nothing).
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    Removes recursively, together with any subdirectories and files.
+
+
+  </p>
+</div>
+<div class="ddoc_section">
+  <p class="para">
+    <span class="ddoc_section_h">Warning:</span>
+This will make any references to subdirectories or
+          files in this directory invalid.
+
+
+  </p>
+</div>
+<div class="ddoc_throws">
+  <h4>Throws</h4>
+  <p class="para">
+     if the directory could not be removed.
+  </p>
+</div>
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSDir.this" id="VFSDir.this"><code class="code">this</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSDir.this"></span>protected pure nothrow @nogc @safe this(VFSDir <code class="code">parent</code>, string <code class="code">pathInParent</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Constructor to initialize state common for  implementations.
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">VFSDir <code class="code">parent</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      Parent directory. If <code class="code">null</code>, this directory has no parent.
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">string <code class="code">pathInParent</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      Path of the directory within the parent.
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSDir.dirsRange" id="VFSDir.dirsRange"><code class="code">dirsRange</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSDir.dirsRange"></span>protected static @safe VFSDirs <code class="code">dirsRange</code>(VFSDirs.Items <code class="code">dirs</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Construct a range from a set of directories.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSDir.filesRange" id="VFSDir.filesRange"><code class="code">filesRange</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSDir.filesRange"></span>protected static @safe VFSFiles <code class="code">filesRange</code>(VFSFiles.Items <code class="code">files</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Construct a range from a set of files.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSDir.composePath" id="VFSDir.composePath"><code class="code">composePath</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSDir.composePath"></span>protected const pure nothrow @safe string <code class="code">composePath</code>(const VFSDir <code class="code">child</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Compose path for a child directory. Used e.g. to allow  to set children's paths.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSDir.create_" id="VFSDir.create_"><code class="code">create_</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSDir.create_"></span>protected @trusted void <code class="code">create_</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Implementation of . Caller contract guarantees that the directory is writable.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSDir.copyWithoutParent" id="VFSDir.copyWithoutParent"><code class="code">copyWithoutParent</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSDir.copyWithoutParent"></span>protected @safe VFSDir <code class="code">copyWithoutParent</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Return a copy of this VFSDir without a parent. Used for mounting.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSDir.getCopyWithoutParent" id="VFSDir.getCopyWithoutParent"><code class="code">getCopyWithoutParent</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSDir.getCopyWithoutParent"></span>protected final @safe VFSDir <code class="code">getCopyWithoutParent</code>(VFSDir <code class="code">dir</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Access for derived classes to call copyWithoutParent() of other instances.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li>
+</ul>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSRange" id="VFSRange"><code class="code">VFSRange</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSRange"></span>struct <code class="code">VFSRange</code>(T) if (is(T == VFSDir) || is(T == VFSFile));
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    A bidirectional range of VFS items (files or directories).
+
+  </p>
+</div>
+<div class="ddoc_examples">
+  <h4>Examples</h4>
+  <p class="para">
+    
+<section class="code_listing">
+  <div class="code_sample">
+    <div class="dlang">
+      <ol class="code_lines">
+        <li><code class="code"><span class="comment">//VFSDirs is a VFSRange of directories - VFSFiles of files.
+</span>VFSDirs dirs;
+
+<span class="comment">//Get the first directory.
+</span><span class="keyword">auto</span> f = dirs.front;
+
+<span class="comment">//Get the last directory.
+</span><span class="keyword">auto</span> b = dirs.back;
+
+<span class="comment">//Remove the first directory from the range (this will not remove the directory itself).
+</span>dirs.popFront();
+
+<span class="comment">//Remove the last directory from the range (this will not remove the directory itself).
+</span>dirs.popBack();
+
+<span class="comment">//Are there no files/directories ?
+</span><span class="keyword">bool</span> empty = r.empty;
+</code></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+  </p>
+</div>
+</section>
+<ul class="ddoc_members">
+  <li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSRange.compare" id="VFSRange.compare"><code class="code">compare</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSRange.compare"></span>static bool <code class="code">compare</code>(inout(T) <code class="code">a</code>, inout(T) <code class="code">b</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Function used to compare items alphabetically.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSRange.Items" id="VFSRange.Items"><code class="code">Items</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSRange.Items"></span>alias <code class="code">Items</code> = RedBlackTree!(T, compare);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Type used to store the items.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSRange.length" id="VFSRange.length"><code class="code">length</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSRange.length"></span>const pure nothrow @nogc @property @safe size_t <code class="code">length</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Get number of items in the range.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSRange.popFront" id="VFSRange.popFront"><code class="code">popFront</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSRange.popFront"></span>pure nothrow @nogc @safe void <code class="code">popFront</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Pop the front element from the range.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSRange.popBack" id="VFSRange.popBack"><code class="code">popBack</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSRange.popBack"></span>pure nothrow @nogc @safe void <code class="code">popBack</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Pop the back element from the range.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li>
+</ul>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSDirs" id="VFSDirs"><code class="code">VFSDirs</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSDirs"></span>alias <code class="code">VFSDirs</code> = VFSRange!(VFSDir).VFSRange;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    A VFSRange of directories.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSFiles" id="VFSFiles"><code class="code">VFSFiles</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSFiles"></span>alias <code class="code">VFSFiles</code> = VFSRange!(VFSFile).VFSRange;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    A VFSRange of files.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSFile" id="VFSFile"><code class="code">VFSFile</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSFile"></span>abstract class <code class="code">VFSFile</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    A file in the VFS.
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    Provides basic file information and access to I/O.
+<br><br>
+ File names in the VFS can contain any characters except <b>/</b>,
+ which is used as directory separator, and the <b>::</b> sequence, which is
+ used for explicit package lookup (see  ).
+
+
+  </p>
+</div>
+<div class="ddoc_examples">
+  <h4>Examples</h4>
+  <p class="para">
+    
+<section class="code_listing">
+  <div class="code_sample">
+    <div class="dlang">
+      <ol class="code_lines">
+        <li><code class="code">VFSDir dir = <span class="keyword">new</span> FSDir(<span class="string_literal">"main"</span>, <span class="string_literal">"./user_data/main"</span>, Yes.writable);
+
+<span class="comment">//Get the file from a directory.
+</span><span class="psymbol">VFSFile</span> file = dir.file(<span class="string_literal">"logs/memory.log"</span>);
+
+<span class="comment">//Print information about the file (note that we can only get file size of an existing file):
+</span>writeln(<span class="string_literal">"name: "</span>, file.name, <span class="string_literal">", full path: "</span>, file.path,
+        <span class="string_literal">", writable: "</span>, file.writable, <span class="string_literal">", exists: "</span>, file.exists,
+        <span class="string_literal">", size in bytes: "</span>, file.bytes);
+
+<span class="comment">//Get access to read from the file:
+</span>{
+    <span class="keyword">auto</span> input = file.input;
+
+    <span class="comment">//Simply read the file to a buffer:
+</span>    <span class="keyword">auto</span> buffer = <span class="keyword">new</span> <span class="keyword">ubyte</span>[file.bytes];
+    input.read(buffer);
+}
+
+<span class="comment">//Get access to write to the file:
+</span>{
+    <span class="keyword">auto</span> output = file.output;
+
+    <span class="comment">//Simply write a buffer to the file:
+</span>    output.write(<span class="keyword">cast</span>(<span class="keyword">const</span> <span class="keyword">void</span>[])<span class="string_literal">"The answer is 42"</span>);
+}
+</code></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+  </p>
+</div>
+</section>
+<ul class="ddoc_members">
+  <li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSFile.Mode" id="VFSFile.Mode"><code class="code">Mode</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSFile.Mode"></span>enum <code class="code">Mode</code>: int;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    File mode (used by implementations);
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSFile.name" id="VFSFile.name"><code class="code">name</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSFile.name"></span>final const nothrow @property @safe string <code class="code">name</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Get name of the file.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSFile.path" id="VFSFile.path"><code class="code">path</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSFile.path"></span>final const nothrow @property @safe string <code class="code">path</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Get full path of the file in the VFS.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSFile.bytes" id="VFSFile.bytes"><code class="code">bytes</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSFile.bytes"></span>const @property @safe ulong <code class="code">bytes</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Get file size in bytes.
+
+  </p>
+</div>
+<div class="ddoc_throws">
+  <h4>Throws</h4>
+  <p class="para">
+     if the file does not exist.
+  </p>
+</div>
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSFile.exists" id="VFSFile.exists"><code class="code">exists</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSFile.exists"></span>const nothrow @property @safe bool <code class="code">exists</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Does the file exist?
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSFile.writable" id="VFSFile.writable"><code class="code">writable</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSFile.writable"></span>const nothrow @property @safe bool <code class="code">writable</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Is it possible to write to this file?
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSFile.open" id="VFSFile.open"><code class="code">open</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSFile.open"></span>const pure nothrow @nogc @property @safe bool <code class="code">open</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Is the file open?
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSFile.input" id="VFSFile.input"><code class="code">input</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSFile.input"></span>final @property VFSFileInput <code class="code">input</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Open the file and get reading access.
+
+  </p>
+</div>
+<div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+     providing input access to the file.
+
+
+  </p>
+</div>
+<div class="ddoc_throws">
+  <h4>Throws</h4>
+  <p class="para">
+     if the file does not exist or is already open.
+  </p>
+</div>
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSFile.output" id="VFSFile.output"><code class="code">output</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSFile.output"></span>final @property VFSFileOutput <code class="code">output</code>(Flag!"<code class="code">append</code>" <code class="code">append</code> = No.<code class="code">append</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Open the file and get writing access. Must not already be open.
+
+  </p>
+</div>
+<div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+     providing output access to the file.
+
+
+  </p>
+</div>
+<div class="ddoc_throws">
+  <h4>Throws</h4>
+  <p class="para">
+     if the file is not writable or is already open.
+  </p>
+</div>
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSFile.this" id="VFSFile.this"><code class="code">this</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSFile.this"></span>protected nothrow @safe this(VFSDir <code class="code">parent</code>, string <code class="code">pathInParent</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Constructor to initialize state common for  implementations.
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">VFSDir <code class="code">parent</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      Parent directory. Must not be <code class="code">null</code>.
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">string <code class="code">pathInParent</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      Path of the file within the parent.
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSFile.this" id="VFSFile.this"><code class="code">this</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSFile.this.2"></span>protected nothrow @safe this(string <code class="code">absolutePath</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Constructor to initialize a  without a parent.
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">noParent</em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      Parent directory. Must not be <code class="code">null</code>.
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">pathInParent</em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      Path of the file within the parent.
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSFile.openRead" id="VFSFile.openRead"><code class="code">openRead</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSFile.openRead"></span>protected void <code class="code">openRead</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Open the file for reading.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSFile.openWrite" id="VFSFile.openWrite"><code class="code">openWrite</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSFile.openWrite"></span>protected void <code class="code">openWrite</code>(Flag!"<code class="code">append</code>" <code class="code">append</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Open the file for writing/appending.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSFile.read" id="VFSFile.read"><code class="code">read</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSFile.read"></span>protected void[] <code class="code">read</code>(void[] <code class="code">target</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Read up to  bytes to <code class="code">target</code> from current file position.
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">void[] <code class="code">target</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      Buffer to read to.
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+<div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Slice of target containing the <code class="code">read</code> data.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSFile.write" id="VFSFile.write"><code class="code">write</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSFile.write"></span>protected void <code class="code">write</code>(in void[] <code class="code">data</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Write  bytes to file from current file position.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSFile.seek" id="VFSFile.seek"><code class="code">seek</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSFile.seek"></span>protected void <code class="code">seek</code>(long <code class="code">offset</code>, Seek <code class="code">origin</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Seek <code class="code">offset</code> bytes from <code class="code">origin</code> within the file.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSFile.close" id="VFSFile.close"><code class="code">close</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSFile.close"></span>protected void <code class="code">close</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Close the file, finalizing any file operations.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSFile.openReadProxy" id="VFSFile.openReadProxy"><code class="code">openReadProxy</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSFile.openReadProxy"></span>protected static void <code class="code">openReadProxy</code>(VFSFile <code class="code">file</code>);
+<br>
+<span class="ddoc_anchor" id="VFSFile.openWriteProxy"></span>protected static void <code class="code">openWriteProxy</code>(VFSFile <code class="code">file</code>, Flag!"<code class="code">append</code>" <code class="code">append</code>);
+<br>
+<span class="ddoc_anchor" id="VFSFile.readProxy"></span>protected static void[] <code class="code">readProxy</code>(VFSFile <code class="code">file</code>, void[] <code class="code">target</code>);
+<br>
+<span class="ddoc_anchor" id="VFSFile.writeProxy"></span>protected static void <code class="code">writeProxy</code>(VFSFile <code class="code">file</code>, const void[] <code class="code">data</code>);
+<br>
+<span class="ddoc_anchor" id="VFSFile.seekProxy"></span>protected static void <code class="code">seekProxy</code>(VFSFile <code class="code">file</code>, long <code class="code">offset</code>, Seek <code class="code">origin</code>);
+<br>
+<span class="ddoc_anchor" id="VFSFile.closeProxy"></span>protected static void <code class="code">closeProxy</code>(VFSFile <code class="code">file</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Proxies to for derived VFSFiles to call protected members of other VFSFiles.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li>
+</ul>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Seek" id="Seek"><code class="code">Seek</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Seek"></span>enum <code class="code">Seek</code>: int;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    File seeking positions.
+  </p>
+</div>
+
+</section>
+<ul class="ddoc_members">
+  <li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Seek.Set" id="Seek.Set"><code class="code">Set</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Seek.Set"></span><code class="code">Set</code>
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Beginning of file.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Seek.Current" id="Seek.Current"><code class="code">Current</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Seek.Current"></span><code class="code">Current</code>
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Current file position.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Seek.End" id="Seek.End"><code class="code">End</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Seek.End"></span><code class="code">End</code>
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    End of file.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li>
+</ul>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSFileInput" id="VFSFileInput"><code class="code">VFSFileInput</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSFileInput"></span>struct <code class="code">VFSFileInput</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Provides basic file input functionality - seeking and reading.
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+     uses reference counting so that the file is closed
+ when the last instance of  provided by the file is destroyed.
+
+
+  </p>
+</div>
+<div class="ddoc_examples">
+  <h4>Examples</h4>
+  <p class="para">
+    
+<section class="code_listing">
+  <div class="code_sample">
+    <div class="dlang">
+      <ol class="code_lines">
+        <li><code class="code">VFSFile file; <span class="comment">//initialized somewhere before
+</span>
+<span class="keyword">auto</span> input = file.input;
+<span class="keyword">with</span>(input)
+{
+    <span class="keyword">auto</span> buffer = <span class="keyword">new</span> <span class="keyword">ubyte</span>[32];
+
+    <span class="comment">//Read the first 32 bytes from the file:
+</span>    read(buffer);
+
+    <span class="comment">//Read the next 32 bytes:
+</span>    read(buffer);
+
+    <span class="comment">//Read the last 32 bytes in the file:
+</span>    seek(-32, file);
+    read(buffer);
+}
+</code></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+  </p>
+</div>
+</section>
+<ul class="ddoc_members">
+  <li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSFileInput.read" id="VFSFileInput.read"><code class="code">read</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSFileInput.read"></span>void[] <code class="code">read</code>(void[] <code class="code">target</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Read at most  bytes starting at current file position to <code class="code">target</code>.
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    If the file does not have enough bytes to fill <code class="code">target</code> or a reading
+ error is encountered, it reads as much data as possible and returns
+ the part of <code class="code">target</code> containing the read data.
+
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">void[] <code class="code">target</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      Buffer to read to.
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+<div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    Slice of target containing the <code class="code">read</code> data.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSFileInput.seek" id="VFSFileInput.seek"><code class="code">seek</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSFileInput.seek"></span>void <code class="code">seek</code>(long <code class="code">offset</code>, Seek <code class="code">origin</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Set file position to <code class="code">offset</code> bytes from specified <code class="code">origin</code>.
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">long <code class="code">offset</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      Number of bytes to set file position relative to <code class="code">origin</code>.
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">Seek <code class="code">origin</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      Position to which <code class="code">offset</code> is added.
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+<div class="ddoc_throws">
+  <h4>Throws</h4>
+  <p class="para">
+     if trying to seek before the beginning or beyond
+          the end of file.
+  </p>
+</div>
+</section>
+
+</div>
+
+</li>
+</ul>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSFileOutput" id="VFSFileOutput"><code class="code">VFSFileOutput</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSFileOutput"></span>struct <code class="code">VFSFileOutput</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Provides basic file output functionality - seeking and writing.
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+     uses reference counting so that the file is closed
+ when the last instance of  provided by the file is destroyed.
+
+
+  </p>
+</div>
+<div class="ddoc_examples">
+  <h4>Examples</h4>
+  <p class="para">
+    
+<section class="code_listing">
+  <div class="code_sample">
+    <div class="dlang">
+      <ol class="code_lines">
+        <li><code class="code">VFSFile file; <span class="comment">//initialized somewhere before
+</span>
+<span class="keyword">auto</span> output = file.output;
+<span class="keyword">with</span>(output)
+{
+    <span class="comment">//Write to the file:
+</span>    write(<span class="keyword">cast</span>(<span class="keyword">const</span> <span class="keyword">void</span>[])<span class="string_literal">"The answer is ??"</span>);
+
+    <span class="comment">//Change the last two characters in the file:
+</span>    seek(-2, Seek.End);
+    write(<span class="keyword">cast</span>(<span class="keyword">const</span> <span class="keyword">void</span>[])<span class="string_literal">"42"</span>);
+}
+</code></li>
+      </ol>
+    </div>
+  </div>
+</section>
+<br><br>
+
+<section class="code_listing">
+  <div class="code_sample">
+    <div class="dlang">
+      <ol class="code_lines">
+        <li><code class="code"><span class="comment">//Appending:
+</span><span class="comment">//When appending to the file, every write writes to the end of file
+</span><span class="comment">//regardless of any calls to seek(), and sets the file position
+</span><span class="comment">//to end of file. This
+</span><span class="comment">//(This is to stay in line with the C standard so we can use C functions directly)
+</span><span class="keyword">auto</span> output = file.output(Yes.append);
+<span class="keyword">with</span>(output)
+{
+    <span class="comment">//Append to the file:
+</span>    write(<span class="keyword">cast</span>(<span class="keyword">const</span> <span class="keyword">void</span>[])<span class="string_literal">"The answer is ??"</span>);
+
+    <span class="comment">//This will NOT change the last 2 characters: it will append anyway:
+</span>    seek(-2, Seek.End);
+    write(<span class="keyword">cast</span>(<span class="keyword">const</span> <span class="keyword">void</span>[])<span class="string_literal">"42"</span>);
+}
+</code></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+  </p>
+</div>
+</section>
+<ul class="ddoc_members">
+  <li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSFileOutput.write" id="VFSFileOutput.write"><code class="code">write</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSFileOutput.write"></span>void <code class="code">write</code>(const void[] <code class="code">data</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Write <code class="code">data</code> to file starting at current file position.
+
+  </p>
+</div>
+<div class="ddoc_section">
+  <p class="para">
+    <span class="ddoc_section_h">Note:</span>
+In append mode, any write will write to the end of file regardless
+ of the current file position and file position will be set to the
+ end of file.
+<br><br>
+ (This is to stay in line with the C standard so we can use C I/O functions directly)
+
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">void[] <code class="code">data</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      Data to write to the file.
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+<div class="ddoc_throws">
+  <h4>Throws</h4>
+  <p class="para">
+     on error (e.g. after running out of disk space).
+  </p>
+</div>
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#VFSFileOutput.seek" id="VFSFileOutput.seek"><code class="code">seek</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="VFSFileOutput.seek"></span>void <code class="code">seek</code>(long <code class="code">offset</code>, Seek <code class="code">origin</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Set file position to <code class="code">offset</code> bytes from specified <code class="code">origin</code>.
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">long <code class="code">offset</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      Number of bytes to set file position relative to <code class="code">origin</code>.
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">Seek <code class="code">origin</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      Position to which <code class="code">offset</code> is added.
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+<div class="ddoc_throws">
+  <h4>Throws</h4>
+  <p class="para">
+     if trying to seek before the beginning or behind
+          the end of file, or on a different error.
+  </p>
+</div>
+</section>
+
+</div>
+
+</li>
+</ul>
+
+</div>
+
+</li>
+</ul>
+  </div>
+</section>
+</section>
+      </article>
+    </div>
+  </body>
+</html>
