@@ -6,6 +6,7 @@
 <script src="../../highlight.pack.js"></script>
 <title>StackFile</title>
 <base href="../../"/>
+<script src="anchor.js"></script>
 <script src="search.js"></script>
 <script src="show_hide.js"></script>
 </head>
@@ -20,9 +21,8 @@
 <a href="dgamevfs/stack.html#hide-toc" class="hide" id="hide-toc">&#171;</a>
 <a href="dgamevfs/stack.html#show-toc" class="show" id="show-toc">&#187;</a>
 <div id="toc-id" class="toc">
-<ul><li><span class="package" onclick="show_hide('dgamevfs');">dgamevfs</span>
+<ul><li><span class="package" onclick="show_hide('dgamevfs');"><a href="dgamevfs.html">dgamevfs</a></span>
 <ul id="dgamevfs" style='display:block'>
-<li>dgamevfs.<a href="dgamevfs/_.html">_</a></li>
 <li>dgamevfs.<a href="dgamevfs/exceptions.html">exceptions</a></li>
 <li>dgamevfs.<a href="dgamevfs/fs.html">fs</a></li>
 <li><span class=" selected">dgamevfs.<a href="dgamevfs/stack.html">stack</a></span>
@@ -36,29 +36,40 @@
 <div class="content">
 <div class="aggregate-symbol"><div class="description"><pre><code>public class StackFile : <a href="dgamevfs/vfs/VFSFile.html">VFSFile</a>
 </code></pre>
-<div class="section ">A file seamlessly working on a stack of multiple files.
+<div class="section"><p>A file seamlessly working on a stack of multiple files.
+</p>
+
 
 </div>
-<div class="section">This is the file implementation returned by  <code class="d_inlinecode">StackDir</code> methods.
-
-It has one file from each directory in the  <code class="d_inlinecode">StackDir</code> - all of these
-files map to the same path in the <code class="d_inlinecode">StackDir</code>.
-
-When reading from <code class="d_inlinecode">StackFile</code>, it will read from the newest file
+<div class="section"><p>This is the file implementation returned by  <b>StackDir</b> methods.
+It has one file from each directory in the  <b>StackDir</b> - all of these
+files map to the same path in the <b>StackDir</b>.
+When reading from <b>StackFile</b>, it will read from the newest file
 in the stack that exists.
-
 When writing, it will write to the newest file that is writable
 regardless of whether it already exists or not.
+</p>
+
 
 </div>
 </div><a class="anchor" id="stack_"></a><div class="symbol"><div class="description"><pre><code>private <a href="dgamevfs/vfs/VFSFile.html">VFSFile</a>[] stack_
 </code></pre>
-<div class="section ">File stack.
+<div class="section"><p>File stack.
+</p>
+
 
 </div>
-</div></div><a class="anchor" id="openFile_"></a><div class="symbol"><div class="description"><pre><code>private <a href="dgamevfs/vfs/VFSFile.html">VFSFile</a> openFile_
+<div class="section">
+
+</div>
+</div></div><a class="anchor" id="openFile_"></a><div class="symbol"><div class="description"><pre><code>private <a href="dgamevfs/vfs/VFSFile.html">VFSFile</a> openFile_ = null
 </code></pre>
-<div class="section ">Currently open file, if any.
+<div class="section"><p>Currently open file, if any.
+</p>
+
+
+</div>
+<div class="section">
 
 </div>
 </div></div><a class="anchor" id="this"></a><div class="symbol"><div class="description"><pre><code>private this(
@@ -66,29 +77,40 @@ regardless of whether it already exists or not.
     string pathInParent, 
     <a href="dgamevfs/vfs/VFSFile.html">VFSFile</a>[] stack)
 </code></pre>
-<div class="section ">Construct a <code class="d_inlinecode">StackFile</code>.
+<div class="section"><p>Construct a <b>StackFile</b>.
+</p>
+
+
+</div>
+<div class="section">
 
 </div>
 <div class="section"><h2>Parameters</h2>
 <table class="params">
-<tr class="param"><td class="paramName">parent</td><td class="paramDoc">Parent directory of the file.</td></tr>
-<tr class="param"><td class="paramName">pathInParent</td><td class="paramDoc">Path of the file within the parent directory.</td></tr>
-<tr class="param"><td class="paramName">stack</td><td class="paramDoc">File stack.
+<tr class="param"><td class="paramName">parent</td><td class="paramDoc"><p>Parent directory of the file.
+</p>
+</td></tr>
+<tr class="param"><td class="paramName">pathInParent</td><td class="paramDoc"><p>Path of the file within the parent directory.
+</p>
+</td></tr>
+<tr class="param"><td class="paramName">stack</td><td class="paramDoc"><p>File stack.
+</p>
 </td></tr>
 </table>
 </div>
 </div></div><div class="section members"><h2>Variables</h2><table><tr><td><a href="dgamevfs/stack/StackFile.html#stack_">stack_</a></td><td><pre><code><a href="dgamevfs/vfs/VFSFile.html">VFSFile</a>[]
 </code></pre>
-</td><td>File stack.</td></tr><tr><td><a href="dgamevfs/stack/StackFile.html#openFile_">openFile_</a></td><td><pre><code><a href="dgamevfs/vfs/VFSFile.html">VFSFile</a>
+</td><td></td></tr><tr><td><a href="dgamevfs/stack/StackFile.html#openFile_">openFile_</a></td><td><pre><code><a href="dgamevfs/vfs/VFSFile.html">VFSFile</a> = null
 </code></pre>
-</td><td>Currently open file, if any.</td></tr></table><h2>Functions</h2><table><tr><td><a href="dgamevfs/stack/StackFile.html#this">this</a></td><td></td><td>Construct a <code class="d_inlinecode">StackFile</code>.</td></tr></table>
+</td><td></td></tr></table><h2>Functions</h2><table><tr><td><a href="dgamevfs/stack/StackFile.html#this">this</a></td><td></td><td></td></tr></table>
 </div>
 </div><script>hljs.initHighlightingOnLoad();</script>
 
 </div>
 <footer>
-Generated with <a href="https://github.com/kiith-sa/harbored-mod">harbored-mod</a>
+Generated with <a href="https://gitlab.com/basile.b/harbored-mod">harbored-mod</a>
 </footer>
 </div>
+<script>anchors.add();</script>
 </body>
 </html>

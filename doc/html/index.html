@@ -6,6 +6,7 @@
 <script src="highlight.pack.js"></script>
 <title>Index</title>
 <base href=""/>
+<script src="anchor.js"></script>
 <script src="search.js"></script>
 <script src="show_hide.js"></script>
 </head>
@@ -17,12 +18,11 @@
 Main Page
 </div>
 <div class="sidebar">
-<a href=".html#hide-toc" class="hide" id="hide-toc">&#171;</a>
-<a href=".html#show-toc" class="show" id="show-toc">&#187;</a>
+<a href="index.html#hide-toc" class="hide" id="hide-toc">&#171;</a>
+<a href="index.html#show-toc" class="show" id="show-toc">&#187;</a>
 <div id="toc-id" class="toc">
-<ul><li><span class="package" onclick="show_hide('dgamevfs');">dgamevfs</span>
+<ul><li><span class="package" onclick="show_hide('dgamevfs');"><a href="dgamevfs.html">dgamevfs</a></span>
 <ul id="dgamevfs">
-<li>dgamevfs.<a href="dgamevfs/_.html">_</a></li>
 <li>dgamevfs.<a href="dgamevfs/exceptions.html">exceptions</a></li>
 <li>dgamevfs.<a href="dgamevfs/fs.html">fs</a></li>
 <li>dgamevfs.<a href="dgamevfs/stack.html">stack</a></li>
@@ -33,11 +33,25 @@ Main Page
 </ul>
 </div></div>
 <div class="content">
+<div class="section imports"><h2>Module list</h2><table class="module-list">
+<tr><td class="module-name"><a href="dgamevfs.html">dgamevfs</a></td><td></td></tr>
+<tr><td class="module-name"><a href="dgamevfs/exceptions.html">dgamevfs.exceptions</a></td><td><p>Exceptions thrown by D:GameVFS and exception related code.
+</p>
+</td></tr>
+<tr><td class="module-name"><a href="dgamevfs/fs.html">dgamevfs.fs</a></td><td></td></tr>
+<tr><td class="module-name"><a href="dgamevfs/stack.html">dgamevfs.stack</a></td><td><p>Stacked files/directories for seamless access to multiple directories as if they were a single directory.
+</p>
+</td></tr>
+<tr><td class="module-name"><a href="dgamevfs/vfs.html">dgamevfs.vfs</a></td><td></td></tr>
+</table>
+
+</div>
 
 </div>
 <footer>
-Generated with <a href="https://github.com/kiith-sa/harbored-mod">harbored-mod</a>
+Generated with <a href="https://gitlab.com/basile.b/harbored-mod">harbored-mod</a>
 </footer>
 </div>
+<script>anchors.add();</script>
 </body>
 </html>
