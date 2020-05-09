@@ -19,7 +19,11 @@ dub test --compiler=$DC
 
 # Run examples tests
 pushd examples/getting_started
-dub test --compiler=$DC -q
+dub run --compiler=$DC -q
+popd
+
+pushd examples/vfsfile
+dub run --compiler=$DC -q
 popd
 
 

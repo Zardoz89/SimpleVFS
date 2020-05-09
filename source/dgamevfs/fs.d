@@ -29,7 +29,7 @@ import dgamevfs.util;
  *
  * For example, if you are working with Windows, paths are not case sensitive.
  */
-class FSDir : VFSDir 
+class FSDir : VFSDir
 {
     private:
         //Path of the directory in the physical filesystem.
@@ -46,7 +46,7 @@ class FSDir : VFSDir
          *         physicalPath = Path of the directory in the physical filesystem.
          *         writable     = Is this directory _writable?
          *                        $(D FSDir) can't determine whether you have permission
-         *                        to write in a directory - you must specify this 
+         *                        to write in a directory - you must specify this
          *                        explicitly.
          */
         this(string name, string physicalPath, Flag!"writable" writable = Yes.writable)
@@ -66,11 +66,11 @@ class FSDir : VFSDir
         override VFSFile file(string path)
         {
             enforce(isValidPath(path), invalidPath("Invalid physical file path: ", path));
-            enforce(noPackageSeparators(path), 
+            enforce(noPackageSeparators(path),
                     invalidPath("File path contains unexpected package separators: ", path));
-            enforce(exists, 
+            enforce(exists,
                     notFound("Trying to access file ", path, " in filesystem directory ",
-                             this.path, " with physical path ", physicalPath_, 
+                             this.path, " with physical path ", physicalPath_,
                              " that does not exist"));
 
             //Full physical path of the file.
@@ -79,12 +79,12 @@ class FSDir : VFSDir
             const dirPath = dirName(filePath);
 
             enforce(.exists(dirPath),
-                    notFound("Trying to access file ", baseName(filePath), 
-                             " in filesystem directory with physical path ", 
+                    notFound("Trying to access file ", baseName(filePath),
+                             " in filesystem directory with physical path ",
                              dirPath, " that does not exist"));
             enforce(isDir(dirPath),
-                    invalidPath("Trying to access file ", baseName(filePath), 
-                                " in filesystem directory with physical path ", 
+                    invalidPath("Trying to access file ", baseName(filePath),
+                                " in filesystem directory with physical path ",
                                 dirPath, " that is not a directory"));
 
             return new FSFile(this, path, filePath);
@@ -93,12 +93,12 @@ class FSDir : VFSDir
         override VFSDir dir(string path) @trusted
         {
             enforce(isValidPath(path), invalidPath("Invalid physical directory path: ", path));
-            enforce(noPackageSeparators(path), 
-                    invalidPath("Directory path contains unexpected package separators: ", 
+            enforce(noPackageSeparators(path),
+                    invalidPath("Directory path contains unexpected package separators: ",
                                 path));
-            enforce(exists, 
+            enforce(exists,
                     notFound("Trying to access directory ", path, " in filesystem directory ",
-                             this.path, " with physical path ", physicalPath_, 
+                             this.path, " with physical path ", physicalPath_,
                              " that does not exist"));
 
             //Full physical path of the dir.
@@ -107,12 +107,12 @@ class FSDir : VFSDir
             const dirPath = subdirPath.dirName;
 
             enforce(.exists(dirPath),
-                    notFound("Trying to access directory ", subdirPath.baseName, 
-                             " in filesystem directory with physical path ", dirPath, 
+                    notFound("Trying to access directory ", subdirPath.baseName,
+                             " in filesystem directory with physical path ", dirPath,
                              " that does not exist"));
             enforce(dirPath.isDir,
-                    invalidPath("Trying to access file ", subdirPath.baseName, 
-                                " in filesystem directory with physical path ", 
+                    invalidPath("Trying to access file ", subdirPath.baseName,
+                                " in filesystem directory with physical path ",
                                 dirPath, " that is not a directory"));
 
             return new FSDir(this, path, subdirPath, writable_);
@@ -120,13 +120,13 @@ class FSDir : VFSDir
 
         override VFSFiles files(Flag!"deep" deep = No.deep, string glob = null) @trusted
         {
-            enforce(exists, 
-                    notFound("Trying to access files of filesystem directory", path, 
+            enforce(exists,
+                    notFound("Trying to access files of filesystem directory", path,
                              " with physical path ", physicalPath_, " that does not exist"));
 
             auto files = new VFSFiles.Items;
 
-            foreach(DirEntry e; dirEntries(physicalPath_, deep ? SpanMode.depth 
+            foreach(DirEntry e; dirEntries(physicalPath_, deep ? SpanMode.depth
                                                                : SpanMode.shallow))
             {
                 if(!e.isFile()){continue;}
@@ -134,7 +134,7 @@ class FSDir : VFSDir
                 relative.skipOver(physicalPath_);
                 relative.skipOver("/");
                 relative.skipOver("\\");
-                if(glob is null || globMatch(relative, glob)) 
+                if(glob is null || globMatch(relative, glob))
                 {
                     files.insert(new FSFile(this, relative, e.name));
                 }
@@ -145,13 +145,13 @@ class FSDir : VFSDir
 
         override VFSDirs dirs(Flag!"deep" deep = No.deep, string glob = null) @trusted
         {
-            enforce(exists, 
-                    notFound("Trying to access directories of filesystem directory", path, 
+            enforce(exists,
+                    notFound("Trying to access directories of filesystem directory", path,
                              " with physical path ", physicalPath_, " that does not exist"));
 
             auto dirs = new VFSDirs.Items;
 
-            foreach(DirEntry e; dirEntries(physicalPath_, deep ? SpanMode.depth 
+            foreach(DirEntry e; dirEntries(physicalPath_, deep ? SpanMode.depth
                                                                : SpanMode.shallow))
             {
                 if(!e.isDir()){continue;}
@@ -159,7 +159,7 @@ class FSDir : VFSDir
                 relative.skipOver(physicalPath_);
                 relative.skipOver("/");
                 relative.skipOver("\\");
-                if(glob is null || globMatch(relative, glob)) 
+                if(glob is null || globMatch(relative, glob))
                 {
                     dirs.insert(new FSDir(this, relative, e.name, writable_));
                 }
@@ -211,16 +211,16 @@ class FSDir : VFSDir
          *         physicalPath = Path of the directory in the physical filesystem.
          *         writable     = Is this directory writable?
          *                        FSDir can't determine whether you have permission
-         *                        to write in a directory - you must specify this 
+         *                        to write in a directory - you must specify this
          *                        explicitly.
          */
-        this(FSDir parent, string pathInParent, string physicalPath, 
+        this(FSDir parent, string pathInParent, string physicalPath,
              Flag!"writable" writable)
             @trusted
         {
             physicalPath = cleanFSPath(physicalPath);
             pathInParent = cleanFSPath(pathInParent);
-            enforce(isValidPath(physicalPath), 
+            enforce(isValidPath(physicalPath),
                     invalidPath("Invalid physical directory path: ", physicalPath));
             physicalPath_ = physicalPath;
             if(exists)
@@ -254,7 +254,7 @@ class FSFile : VFSFile
         override @property ulong bytes() @trusted const
         {
             enforce(exists,
-                    notFound("Trying to get size of FSFile ", path, 
+                    notFound("Trying to get size of FSFile ", path,
                              " that does not exist"));
             try
             {
@@ -262,7 +262,7 @@ class FSFile : VFSFile
             }
             catch(FileException e)
             {
-                throw notFound("Trying to get size of FSFile ", path, 
+                throw notFound("Trying to get size of FSFile ", path,
                                " that does not exist");
             }
         }
@@ -273,20 +273,20 @@ class FSFile : VFSFile
             catch(Exception e) { assert(false, "std.file.exists() should never throw"); }
         }
 
-        override @property bool open() @safe pure nothrow const @nogc 
+        override @property bool open() @safe pure nothrow const @nogc
         {
             return mode_ != Mode.Closed;
         }
 
     protected:
         override void openRead()
-        {          
+        {
             assert(exists, "Trying to open a nonexistent file for reading: " ~ path);
             assert(mode_ == Mode.Closed, "Trying to open a file that is already open: " ~ path);
 
             auto file = fopen(toStringz(physicalPath_), toStringz("rb"));
             enforce(file !is null,
-                    ioError("FSFile ", path, " with physical path ", physicalPath_, 
+                    ioError("FSFile ", path, " with physical path ", physicalPath_,
                             " could not be opened for reading"));
             file_ = file;
             mode_ = Mode.Read;
@@ -297,10 +297,10 @@ class FSFile : VFSFile
             assert(mode_ == Mode.Closed, "Trying to open a file that is already open" ~ path);
             assert(writable, "Trying open a non-writable file for writing: " ~ path);
 
-            auto file = fopen(toStringz(physicalPath_), 
+            auto file = fopen(toStringz(physicalPath_),
                               toStringz(append ? "ab" : "wb"));
             enforce(file !is null,
-                    ioError("FSFile ", path, " with physical path ", physicalPath_, 
+                    ioError("FSFile ", path, " with physical path ", physicalPath_,
                             " could not be opened for writing"));
             file_ = file;
             mode_ = (append ? Mode.Append : Mode.Write);
@@ -308,7 +308,7 @@ class FSFile : VFSFile
 
         override void[] read(void[] target)
         {
-            assert(mode_ == Mode.Read, 
+            assert(mode_ == Mode.Read,
                    "Trying to read from a file not opened for reading: " ~ path);
 
             return target[0 .. fread(target.ptr, 1, target.length, file_)];
@@ -316,7 +316,7 @@ class FSFile : VFSFile
 
         override void write(const void[] data)
         {
-            assert(mode_ == Mode.Write || mode_ == Mode.Append, 
+            assert(mode_ == Mode.Write || mode_ == Mode.Append,
                    "Trying to write to a file not opened for writing/appending: " ~ path);
             assert(writable, "Trying to write to a non-writable file: " ~ path);
 
@@ -338,14 +338,14 @@ class FSFile : VFSFile
                               origin == Seek.Current ? seekPosition() :
                                                        length;
             const long position = base + offset;
-            enforce(position >= 0, 
+            enforce(position >= 0,
                     ioError("Trying to seek before the beginning of file: " ~ path));
             enforce(position <= length,
                     ioError("Trying to seek beyond the end of file: " ~ path));
 
             static if(size_t.sizeof == 4)
             {
-                enforce(offset <= int.max, 
+                enforce(offset <= int.max,
                         ioError("Seeking beyond 2 GiB not supported on 32bit. File: " ~ path));
                 const platformOffset = cast(int)offset;
             }
@@ -354,7 +354,7 @@ class FSFile : VFSFile
                 alias offset platformOffset;
             }
 
-            if(fseek(file_, platformOffset, 
+            if(fseek(file_, platformOffset,
                      origin == Seek.Set     ? SEEK_SET :
                      origin == Seek.Current ? SEEK_CUR :
                                               SEEK_END))
@@ -381,7 +381,7 @@ class FSFile : VFSFile
          *          pathInParent = Path of the file in the parent directory (aka file name).
          *          physicalPath = Path in the physical filesystem.
          *
-         * Throws:  VFSInvalidPathException if pathInParent is not valid 
+         * Throws:  VFSInvalidPathException if pathInParent is not valid
          *          (contains '/' or "::").
          */
         this(FSDir parent, string pathInParent, string physicalPath)
@@ -429,7 +429,7 @@ class FSFile : VFSFile
             const result = ftell(file_);
             if(result < 0)
             {
-                throw ioError("Error determining file position in FSFile ", path, 
+                throw ioError("Error determining file position in FSFile ", path,
                               " with physical path ", physicalPath_);
             }
             return result;

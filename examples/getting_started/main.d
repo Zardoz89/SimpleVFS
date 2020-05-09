@@ -1,6 +1,6 @@
 import std.stdio;
 import std.typecons;
-import dgamevfs._;
+import dgamevfs;
 
 void main()
 {

@@ -280,7 +280,7 @@ struct VFSRange(T) if(is(T == VFSDir) || is(T == VFSFile))
 {
     public:
         ///Function used to _compare items alphabetically.
-        static bool compare(inout(T) a, inout(T) b) { 
+        static bool compare(inout(T) a, inout(T) b) {
           return 0 < cmp(a.path, b.path);
         }
 
@@ -364,17 +364,21 @@ alias VFSFiles = VFSRange!VFSFile;
  *         ", size in bytes: ", file.bytes);
  *
  * //Get access to read from the file:
- * auto input = file.input;
+ * {
+ *     auto input = file.input;
  *
- * //Simply read the file to a buffer:
- * auto buffer = new ubyte[file.bytes];
- * file.input.read(buffer);
+ *     //Simply read the file to a buffer:
+ *     auto buffer = new ubyte[file.bytes];
+ *     input.read(buffer);
+ * }
  *
  * //Get access to write to the file:
- * auto output = file.output;
+ * {
+ *     auto output = file.output;
  *
- * //Simply write a buffer to the file:
- * file.output.write(cast(const void[])"The answer is 42");
+ *     //Simply write a buffer to the file:
+ *     output.write(cast(const void[])"The answer is 42");
+ * }
  * --------------------
  */
 abstract class VFSFile
@@ -648,9 +652,13 @@ struct VFSFileInput
         ~this()
         {
             invariant_();
-            if(isNull_){return;}
+            if(isNull_) {
+                return;
+            }
             --refCount_.count;
-            if(refCount_.count == 0){file_.close();}
+            if(refCount_.count == 0) {
+                file_.close();
+            }
         }
 
         //Assignment operator (refcounting)

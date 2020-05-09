@@ -1,0 +1,13 @@
+{
+  "name": "vfsfile",
+  "targetType": "executable",
+  "sourceFiles": ["main.d"],
+  "mainSourceFile": "main.d",
+  "dependencies":
+  {
+    "dgamevfs": {
+      "version": "*",
+      "path": "../.."
+    }
+  }
+}
