@@ -1,10 +1,8 @@
-=============
-D:GameVFS 0.2
-=============
+====================================
+GamedVFS 0.2.1 A fork from D-GameVFS
+====================================
 
-.. image:: https://travis-ci.org/kiith-sa/D-GameVFS.svg?branch=master
-.. image:: https://raw.githubusercontent.com/kiith-sa/D-GameVFS/master/code.dlang.org-shield.png
-   :target: http://code.dlang.org
+.. image:: https://travis-ci.org/Zardoz89/GamedVFS.svg?branch=master
 
 ------------
 Introduction
@@ -22,6 +20,8 @@ moment. There is no archive support right now.
 D:GameVFS is a work in progress and its API is not stable. There might be
 compatibility breaking changes in future versions.
 
+GamedVFS it's a fork from D-GameVFS that updates to the latest changes of the 
+language, and attempt to polish and finish the previous works.
 
 --------
 Features
@@ -70,20 +70,9 @@ for your operating system and install it.
    `GDC <http://gdcproject.org/>`_ and
    `LDC <http://bitbucket.org/goshawk/gdc/wiki/Home>`_.
 
-^^^^^^^^^^^
-Install dub
-^^^^^^^^^^^
-
-`dub <http://code.dlang.org/about>`_ is a build system and package manager for D.
-It is the standard way to manage D projects and their dependencies, compilation and so
-on.
-
-DMD may include DUB in future releases, but at this point we need to install it
-separately. See
-`installation instructions <https://github.com/D-Programming-Language/dub#installation>`_.
 
 ^^^^^^^^^^^^^^^^^^^^^^^^
-Simple D:GameVFS project
+Simple GamedVFS project
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 Create a directory for your project. To have something for D:GameVFS to work with,
@@ -95,7 +84,7 @@ directories, create some random files or subdirectories.  Create a file called
 
    import std.stdio;
    import std.typecons;
-   import dgamevfs._;
+   import dgamevfs;
 
    void main()
    {
@@ -203,7 +192,7 @@ Create a file called ``dub.json`` with the following contents:
        "mainSourceFile": "main.d",
        "dependencies":
        {
-           "dgamevfs": { "version" : "~>0.2.0" },
+           "gamedvfs": { "version" : "~>0.2.1" },
        },
    }
 
@@ -265,6 +254,8 @@ Credits
 -------
 
 D:GameVFS was created by Ferdinand Majerech aka Kiith-Sa kiithsacmp[AT]gmail.com .
+
+GamedVFS was a fork created by Luis Panadero Guardeño aka Zardoz luis.panadero[AT]gmail.com .
 
 The API was inspired the VFS API of the
 `Tango library <http://www.dsource.org/projects/tango/>`_.

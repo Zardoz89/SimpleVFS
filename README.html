@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="generator" content="Docutils 0.15.2: http://docutils.sourceforge.net/" />
-<title>D:GameVFS 0.2</title>
+<title>GamedVFS 0.2.1 A fork from D-GameVFS</title>
 <style type="text/css">
 
 /* Minimal style sheet for the HTML output of Docutils.                    */
@@ -557,11 +557,10 @@ a { text-decoration: none; }
 </style>
 </head>
 <body>
-<div class="document" id="d-gamevfs-0-2">
-<h1 class="title">D:GameVFS 0.2</h1>
+<div class="document" id="gamedvfs-0-2-1-a-fork-from-d-gamevfs">
+<h1 class="title">GamedVFS 0.2.1 A fork from D-GameVFS</h1>
 
-<img alt="https://travis-ci.org/kiith-sa/D-GameVFS.svg?branch=master" src="https://travis-ci.org/kiith-sa/D-GameVFS.svg?branch=master" />
-<a class="reference external image-reference" href="http://code.dlang.org"><img alt="https://raw.githubusercontent.com/kiith-sa/D-GameVFS/master/code.dlang.org-shield.png" src="https://raw.githubusercontent.com/kiith-sa/D-GameVFS/master/code.dlang.org-shield.png" /></a>
+<img alt="https://travis-ci.org/Zardoz89/GamedVFS.svg?branch=master" src="https://travis-ci.org/Zardoz89/GamedVFS.svg?branch=master" />
 <div class="section" id="introduction">
 <h1>Introduction</h1>
 <p>D:GameVFS is a minimalist open source virtual file system library for the
@@ -573,6 +572,8 @@ outside the program. Only files in a physical file system are supported at the
 moment. There is no archive support right now.</p>
 <p>D:GameVFS is a work in progress and its API is not stable. There might be
 compatibility breaking changes in future versions.</p>
+<p>GamedVFS it's a fork from D-GameVFS that updates to the latest changes of the
+language, and attempt to polish and finish the previous works.</p>
 </div>
 <div class="section" id="features">
 <h1>Features</h1>
@@ -631,24 +632,15 @@ for your operating system and install it.</p>
 <a class="reference external" href="http://bitbucket.org/goshawk/gdc/wiki/Home">LDC</a>.</p>
 </div>
 </div>
-<div class="section" id="install-dub">
-<h2>Install dub</h2>
-<p><a class="reference external" href="http://code.dlang.org/about">dub</a> is a build system and package manager for D.
-It is the standard way to manage D projects and their dependencies, compilation and so
-on.</p>
-<p>DMD may include DUB in future releases, but at this point we need to install it
-separately. See
-<a class="reference external" href="https://github.com/D-Programming-Language/dub#installation">installation instructions</a>.</p>
-</div>
-<div class="section" id="simple-d-gamevfs-project">
-<h2>Simple D:GameVFS project</h2>
+<div class="section" id="simple-gamedvfs-project">
+<h2>Simple GamedVFS project</h2>
 <p>Create a directory for your project. To have something for D:GameVFS to work with,
 create subdirectories <span class="docutils literal">main_data</span> and <span class="docutils literal">user_data</span> in the project directory. In these
 directories, create some random files or subdirectories.  Create a file called
 <span class="docutils literal">main.d</span> in your project directory. Paste the following code into the file:</p>
 <pre class="code d literal-block"><code><span class="keyword">import</span> <span class="name">std</span><span class="punctuation">.</span><span class="name">stdio</span><span class="punctuation">;</span>
 <span class="keyword">import</span> <span class="name">std</span><span class="punctuation">.</span><span class="name">typecons</span><span class="punctuation">;</span>
-<span class="keyword">import</span> <span class="name">dgamevfs</span><span class="punctuation">.</span><span class="name">_</span><span class="punctuation">;</span>
+<span class="keyword">import</span> <span class="name">dgamevfs</span><span class="punctuation">;</span>
 
 <span class="keyword type">void</span> <span class="name">main</span><span class="punctuation">()</span>
 <span class="punctuation">{</span>
@@ -734,7 +726,7 @@ as much data as available and returns the part of the buffer containing the read
     <span class="name tag">&quot;mainSourceFile&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;main.d&quot;</span><span class="punctuation">,</span>
     <span class="name tag">&quot;dependencies&quot;</span><span class="punctuation">:</span>
     <span class="punctuation">{</span>
-        <span class="name tag">&quot;dgamevfs&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span> <span class="name tag">&quot;version&quot;</span> <span class="punctuation">:</span> <span class="literal string double">&quot;~&gt;0.2.0&quot;</span> <span class="punctuation">},</span>
+        <span class="name tag">&quot;gamedvfs&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span> <span class="name tag">&quot;version&quot;</span> <span class="punctuation">:</span> <span class="literal string double">&quot;~&gt;0.2.1&quot;</span> <span class="punctuation">},</span>
     <span class="punctuation">},</span>
 <span class="punctuation">}</span></code></pre>
 <p>This file tells dub that we're building an executable called <span class="docutils literal"><span class="pre">getting-started</span></span> from
@@ -785,6 +777,7 @@ DEALINGS IN THE SOFTWARE.</pre>
 <div class="section" id="credits">
 <h1>Credits</h1>
 <p>D:GameVFS was created by Ferdinand Majerech aka Kiith-Sa kiithsacmp[AT]gmail.com .</p>
+<p>GamedVFS was a fork created by Luis Panadero Guardeño aka Zardoz luis.panadero[AT]gmail.com .</p>
 <p>The API was inspired the VFS API of the
 <a class="reference external" href="http://www.dsource.org/projects/tango/">Tango library</a>.</p>
 <p>D:GameVFS was created using Vim and DMD on Debian, Ubuntu and Linux Mint as a VFS
