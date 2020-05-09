@@ -20,7 +20,7 @@ moment. There is no archive support right now.
 D:GameVFS is a work in progress and its API is not stable. There might be
 compatibility breaking changes in future versions.
 
-GamedVFS it's a fork from D-GameVFS that updates to the latest changes of the 
+GamedVFS it's a fork from `D-GameVFS: <https://github.com/kiith-sa/D-GameVFS>`_ that updates to the latest changes of the 
 language, and attempt to polish and finish the previous works.
 
 --------
@@ -28,8 +28,6 @@ Features
 --------
 
 * File system independent, easy to use API for file/directory manipulation.
-* Detailed `API documentation <http://ddocs.org/dgamevfs/~master/index.html>`_ 
-  (at `DDocs.org <http://ddocs.org>`_) with code examples.
 * No external dependencies.
 * Seamless access to multiple directories as if they were a single directory.
 * Easy to extend with custom file system backend.
@@ -46,8 +44,7 @@ Directory structure
 Directory        Contents
 ===============  =======================================================================
 ``./``           This README file, utility scripts.
-``./doc``        API documentation, also found
-                 `online <http://defenestrate.eu/docs/dgamevfs>`_
+``./docs``       API documentation
 ``./source``     Source code.
 ``./examples``   Code examples.
 ===============  =======================================================================
