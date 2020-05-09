@@ -1,260 +1,507 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.12: http://docutils.sourceforge.net/" />
+<meta charset="utf-8"/>
+<meta name="generator" content="Docutils 0.15.2: http://docutils.sourceforge.net/" />
 <title>D:GameVFS 0.2</title>
 <style type="text/css">
 
-/*
-:Author: David Goodger (goodger@python.org)
-:Id: $Id: html4css1.css 7614 2013-02-21 15:55:51Z milde $
-:Copyright: This stylesheet has been placed in the public domain.
+/* Minimal style sheet for the HTML output of Docutils.                    */
+/*                                                                         */
+/* :Author: Günter Milde, based on html4css1.css by David Goodger          */
+/* :Id: $Id: minimal.css 8216 2018-06-05 13:37:44Z milde $               */
+/* :Copyright: © 2015 Günter Milde.                                        */
+/* :License: Released under the terms of the `2-Clause BSD license`_,      */
+/*    in short:                                                            */
+/*                                                                         */
+/*    Copying and distribution of this file, with or without modification, */
+/*    are permitted in any medium without royalty provided the copyright   */
+/*    notice and this notice are preserved.                                */
+/*                                                                         */
+/*    This file is offered as-is, without any warranty.                    */
+/*                                                                         */
+/* .. _2-Clause BSD license: http://www.spdx.org/licenses/BSD-2-Clause     */
 
-Default cascading style sheet for the HTML output of Docutils.
+/* This CSS2.1_ stylesheet defines rules for Docutils elements without    */
+/* HTML equivalent. It is required to make the document semantic visible. */
+/*                                                                        */
+/* .. _CSS2.1: http://www.w3.org/TR/CSS2                                  */
+/* .. _validates: http://jigsaw.w3.org/css-validator/validator$link       */
 
-See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
-customize this style sheet.
-*/
+/* alignment of text and inline objects inside block objects*/
+.align-left   { text-align: left; }
+.align-right  { text-align: right; }
+.align-center { clear: both; text-align: center; }
+.align-top    { vertical-align: top; }
+.align-middle { vertical-align: middle; }
+.align-bottom { vertical-align: bottom; }
 
-/* used to remove borders from tables and images */
-.borderless, table.borderless td, table.borderless th {
-  border: 0 }
-
-table.borderless td, table.borderless th {
-  /* Override padding for "table.docutils td" with "! important".
-     The right padding separates the table cells. */
-  padding: 0 0.5em 0 0 ! important }
-
-.first {
-  /* Override more specific margin styles with "! important". */
-  margin-top: 0 ! important }
-
-.last, .with-subtitle {
-  margin-bottom: 0 ! important }
-
-.hidden {
-  display: none }
-
+/* titles */
+h1.title, p.subtitle {
+  text-align: center;
+}
+p.admonition-title,
+p.topic-title,
+p.sidebar-title,
+p.rubric,
+p.system-message-title {
+  font-weight: bold;
+}
+h1 + p.subtitle,
+h1 + p.section-subtitle {
+  font-size: 1.6em;
+}
+h2 + p.section-subtitle { font-size: 1.28em; }
+p.subtitle,
+p.section-subtitle,
+p.sidebar-subtitle {
+  font-weight: bold;
+  margin-top: -0.5em;
+}
+p.sidebar-title,
+p.rubric {
+  font-size: larger;
+}
+p.rubric { color: maroon; }
 a.toc-backref {
-  text-decoration: none ;
-  color: black }
+  color: black;
+  text-decoration: none; }
 
-blockquote.epigraph {
-  margin: 2em 5em ; }
-
-dl.docutils dd {
-  margin-bottom: 0.5em }
-
-object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
-  overflow: hidden;
+/* Warnings, Errors */
+div.caution p.admonition-title,
+div.attention p.admonition-title,
+div.danger p.admonition-title,
+div.error p.admonition-title,
+div.warning p.admonition-title,
+div.system-messages h1,
+div.error,
+span.problematic,
+p.system-message-title {
+  color: red;
 }
 
-/* Uncomment (and remove this text!) to get bold-faced definition list terms
-dl.docutils dt {
-  font-weight: bold }
-*/
+/* inline literals */
+span.docutils.literal {
+  font-family: monospace;
+  white-space: pre-wrap;
+}
+/* do not wraph at hyphens and similar: */
+.literal > span.pre { white-space: nowrap; }
 
-div.abstract {
-  margin: 2em 5em }
+/* Lists */
 
-div.abstract p.topic-title {
-  font-weight: bold ;
-  text-align: center }
+/* compact and simple lists: no margin between items */
+.simple  li, .compact li,
+.simple  ul, .compact ul,
+.simple  ol, .compact ol,
+.simple > li p, .compact > li p,
+dl.simple > dd, dl.compact > dd {
+  margin-top: 0;
+  margin-bottom: 0;
+}
 
-div.admonition, div.attention, div.caution, div.danger, div.error,
-div.hint, div.important, div.note, div.tip, div.warning {
-  margin: 2em ;
-  border: medium outset ;
-  padding: 1em }
+/* Table of Contents */
+div.topic.contents { margin: 0; }
+div.topic.contents ul {
+  list-style-type: none;
+  padding-left: 1.5em;
+}
 
-div.admonition p.admonition-title, div.hint p.admonition-title,
-div.important p.admonition-title, div.note p.admonition-title,
-div.tip p.admonition-title {
-  font-weight: bold ;
-  font-family: sans-serif }
+/* Enumerated Lists */
+ol.arabic     { list-style: decimal }
+ol.loweralpha { list-style: lower-alpha }
+ol.upperalpha { list-style: upper-alpha }
+ol.lowerroman { list-style: lower-roman }
+ol.upperroman { list-style: upper-roman }
 
-div.attention p.admonition-title, div.caution p.admonition-title,
-div.danger p.admonition-title, div.error p.admonition-title,
-div.warning p.admonition-title, .code .error {
-  color: red ;
-  font-weight: bold ;
-  font-family: sans-serif }
+dt span.classifier { font-style: italic }
+dt span.classifier:before {
+  font-style: normal;
+  margin: 0.5em;
+  content: ":";
+}
 
-/* Uncomment (and remove this text!) to get reduced vertical space in
-   compound paragraphs.
-div.compound .compound-first, div.compound .compound-middle {
-  margin-bottom: 0.5em }
+/* Field Lists and drivatives */
+/* bold field name, content starts on the same line */
+dl.field-list > dt,
+dl.option-list > dt,
+dl.docinfo > dt,
+dl.footnote > dt,
+dl.citation > dt {
+  font-weight: bold;
+  clear: left;
+  float: left;
+  margin: 0;
+  padding: 0;
+  padding-right: 0.5em;
+}
+/* Offset for field content (corresponds to the --field-name-limit option) */
+dl.field-list > dd,
+dl.option-list > dd,
+dl.docinfo > dd {
+  margin-left:  9em; /* ca. 14 chars in the test examples */
+}
+/* start field-body on a new line after long field names */
+dl.field-list > dd > *:first-child,
+dl.option-list > dd > *:first-child
+{
+  display: inline-block;
+  width: 100%;
+  margin: 0;
+}
+/* field names followed by a colon */
+dl.field-list > dt:after,
+dl.docinfo > dt:after {
+  content: ":";
+}
 
-div.compound .compound-last, div.compound .compound-middle {
-  margin-top: 0.5em }
-*/
+/* Bibliographic Fields (docinfo) */
+pre.address { font: inherit; }
+dd.authors > p { margin: 0; }
 
-div.dedication {
-  margin: 2em 5em ;
-  text-align: center ;
-  font-style: italic }
+/* Option Lists */
+dl.option-list { margin-left: 40px; }
+dl.option-list > dt { font-weight: normal; }
+span.option { white-space: nowrap; }
 
-div.dedication p.topic-title {
-  font-weight: bold ;
-  font-style: normal }
+/* Footnotes and Citations  */
+dl.footnote.superscript > dd {margin-left: 1em; }
+dl.footnote.brackets > dd {margin-left: 2em; }
+dl > dt.label { font-weight: normal; }
+a.footnote-reference.brackets:before,
+dt.label > span.brackets:before { content: "["; }
+a.footnote-reference.brackets:after,
+dt.label > span.brackets:after { content: "]"; }
+a.footnote-reference.superscript,
+dl.footnote.superscript > dt.label {
+  vertical-align: super;
+  font-size: smaller;
+}
+dt.label > span.fn-backref { margin-left: 0.2em; }
+dt.label > span.fn-backref > a { font-style: italic; }
 
-div.figure {
-  margin-left: 2em ;
-  margin-right: 2em }
-
-div.footer, div.header {
-  clear: both;
-  font-size: smaller }
-
-div.line-block {
-  display: block ;
-  margin-top: 1em ;
-  margin-bottom: 1em }
-
+/* Line Blocks */
+div.line-block { display: block; }
 div.line-block div.line-block {
-  margin-top: 0 ;
-  margin-bottom: 0 ;
-  margin-left: 1.5em }
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 40px;
+}
 
-div.sidebar {
-  margin: 0 0 0.5em 1em ;
-  border: medium outset ;
-  padding: 1em ;
-  background-color: #ffffee ;
-  width: 40% ;
-  float: right ;
-  clear: right }
-
-div.sidebar p.rubric {
-  font-family: sans-serif ;
-  font-size: medium }
-
-div.system-messages {
-  margin: 5em }
-
-div.system-messages h1 {
-  color: red }
-
-div.system-message {
-  border: medium outset ;
-  padding: 1em }
-
-div.system-message p.system-message-title {
-  color: red ;
-  font-weight: bold }
-
-div.topic {
-  margin: 2em }
-
-h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
-h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
-  margin-top: 0.4em }
-
-h1.title {
-  text-align: center }
-
-h2.subtitle {
-  text-align: center }
-
-hr.docutils {
-  width: 75% }
-
-img.align-left, .figure.align-left, object.align-left {
-  clear: left ;
-  float: left ;
-  margin-right: 1em }
-
-img.align-right, .figure.align-right, object.align-right {
-  clear: right ;
-  float: right ;
-  margin-left: 1em }
-
-img.align-center, .figure.align-center, object.align-center {
+/* Figures, Images, and Tables */
+.figure.align-left,
+img.align-left,
+object.align-left,
+table.align-left {
+  margin-right: auto;
+}
+.figure.align-center,
+img.align-center,
+object.align-center {
+  margin-left: auto;
+  margin-right: auto;
   display: block;
+}
+table.align-center {
   margin-left: auto;
   margin-right: auto;
 }
+.figure.align-right,
+img.align-right,
+object.align-right,
+table.align-right {
+  margin-left: auto;
+}
+/* reset inner alignment in figures and tables */
+/* div.align-left, div.align-center, div.align-right, */
+table.align-left, table.align-center, table.align-right
+{ text-align: inherit }
 
-.align-left {
-  text-align: left }
+/* Admonitions and System Messages */
+div.admonition,
+div.system-message,
+div.sidebar{
+  margin: 40px;
+  border: medium outset;
+  padding-right: 1em;
+  padding-left: 1em;
+}
 
-.align-center {
-  clear: both ;
-  text-align: center }
+/* Sidebar */
+div.sidebar {
+  width: 30%;
+  max-width: 26em;
+  float: right;
+  clear: right;
+}
 
-.align-right {
-  text-align: right }
+/* Text Blocks */
+blockquote,
+div.topic,
+pre.literal-block,
+pre.doctest-block,
+pre.math,
+pre.code {
+  margin-left: 1.5em;
+  margin-right: 1.5em
+}
+pre.code .ln { color: gray; } /* line numbers */
 
-/* reset inner alignment in figures */
-div.align-right {
-  text-align: inherit }
+/* Tables */
+table { border-collapse: collapse; }
+td, th {
+  border-style: solid;
+  border-color: silver;
+  padding: 0 1ex;
+  border-width: thin;
+}
+td > p:first-child, th > p:first-child { margin-top: 0; }
+td > p, th > p { margin-bottom: 0; }
 
-/* div.align-center * { */
-/*   text-align: left } */
+table > caption {
+  text-align: left;
+  margin-bottom: 0.25em
+}
 
-ol.simple, ul.simple {
-  margin-bottom: 1em }
+table.borderless td, table.borderless th {
+  border: 0;
+  padding: 0;
+  padding-right: 0.5em /* separate table cells */
+}
 
-ol.arabic {
-  list-style: decimal }
+</style>
+<style type="text/css">
 
-ol.loweralpha {
-  list-style: lower-alpha }
+/* CSS31_ style sheet for the output of Docutils HTML writers.             */
+/* Rules for easy reading and pre-defined style variants.		   */
+/*                                                                         */
+/* :Author: Günter Milde, based on html4css1.css by David Goodger          */
+/* :Id: $Id: plain.css 8229 2018-11-20 17:47:12Z milde $               */
+/* :Copyright: © 2015 Günter Milde.                                        */
+/* :License: Released under the terms of the `2-Clause BSD license`_,      */
+/*    in short:                                                            */
+/*                                                                         */
+/*    Copying and distribution of this file, with or without modification, */
+/*    are permitted in any medium without royalty provided the copyright   */
+/*    notice and this notice are preserved.                                */
+/*    	     	      	     	 					   */
+/*    This file is offered as-is, without any warranty.                    */
+/*                                                                         */
+/* .. _2-Clause BSD license: http://www.spdx.org/licenses/BSD-2-Clause     */
+/* .. _CSS3: http://www.w3.org/TR/CSS3		        		   */
 
-ol.upperalpha {
-  list-style: upper-alpha }
 
-ol.lowerroman {
-  list-style: lower-roman }
+/* Document Structure */
+/* ****************** */
 
-ol.upperroman {
-  list-style: upper-roman }
+/* "page layout" */
+body {
+  margin: 0;
+  background-color: #dbdbdb;
+}
+div.document {
+  line-height:1.3;
+  counter-reset: table;
+  /* counter-reset: figure; */
+  /* avoid long lines --> better reading */
+  /* OTOH: lines should not be too short because of missing hyphenation, */
+  max-width: 50em;
+  padding: 1px 2%; /* 1px on top avoids grey bar above title (mozilla) */
+  margin: auto;
+  background-color: white;
+}
 
-p.attribution {
-  text-align: right ;
-  margin-left: 50% }
+/* Sections */
 
-p.caption {
-  font-style: italic }
+/* Transitions */
 
-p.credits {
-  font-style: italic ;
-  font-size: smaller }
+hr.docutils {
+  width: 80%;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  clear: both;
+}
 
-p.label {
-  white-space: nowrap }
+/* Paragraphs               */
+/* ==========               */
 
-p.rubric {
-  font-weight: bold ;
-  font-size: larger ;
-  color: maroon ;
-  text-align: center }
+/* vertical space (parskip) */
+p, ol, ul, dl,
+div.line-block,
+table{
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+h1, h2, h3, h4, h5, h6,
+dl > dd {
+  margin-bottom: 0.5em;
+}
 
-p.sidebar-title {
-  font-family: sans-serif ;
-  font-weight: bold ;
-  font-size: larger }
+/* Lists                    */
+/* ==========               */
 
-p.sidebar-subtitle {
-  font-family: sans-serif ;
-  font-weight: bold }
+/* Definition Lists         */
 
-p.topic-title {
-  font-weight: bold }
+dl > dd > p:first-child { margin-top: 0; }
+/* :last-child is not part of CSS 2.1 (introduced in CSS 3) */
+dl > dd > p:last-child  { margin-bottom: 0; }
 
-pre.address {
-  margin-bottom: 0 ;
-  margin-top: 0 ;
-  font: inherit }
+/* lists nested in definition lists */
+/* :only-child is not part of CSS 2.1 (introduced in CSS 3) */
+dd > ul:only-child, dd > ol:only-child { padding-left: 1em; }
 
-pre.literal-block, pre.doctest-block, pre.math, pre.code {
-  margin-left: 2em ;
-  margin-right: 2em }
+/* Description Lists */
+/* styled like in most dictionaries, encyclopedias etc. */
+dl.description > dt {
+  font-weight: bold;
+  clear: left;
+  float: left;
+  margin: 0;
+  padding: 0;
+  padding-right: 0.5em;
+}
 
-pre.code .ln { color: grey; } /* line numbers */
+/* Field Lists */
+
+/* example for custom field-name width */
+dl.field-list.narrow > dd {
+  margin-left: 5em;
+}
+/* run-in: start field-body on same line after long field names */
+dl.field-list.run-in > dd p {
+  display: block;
+}
+
+/* Bibliographic Fields */
+
+/* generally, bibliographic fields use special definition list dl.docinfo */
+/* but dedication and abstract are placed into "topic" divs */
+div.abstract p.topic-title {
+  text-align: center;
+}
+div.dedication {
+  margin: 2em 5em;
+  text-align: center;
+  font-style: italic;
+}
+div.dedication p.topic-title {
+  font-style: normal;
+}
+
+/* Citations */
+dl.citation dt.label {
+  font-weight: bold;
+}
+span.fn-backref {
+  font-weight: normal;
+}
+
+/* Text Blocks           */
+/* ============          */
+
+/* Literal Blocks           */
+
+/* Block Quotes             */
+
+blockquote > table,
+div.topic > table {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+blockquote p.attribution,
+div.topic p.attribution {
+  text-align: right;
+  margin-left: 20%;
+}
+
+/* Tables                   */
+/* ======                   */
+
+/* th { vertical-align: bottom; } */
+
+table tr { text-align: left; }
+
+/* "booktabs" style (no vertical lines) */
+table.booktabs {
+  border: 0;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-collapse: collapse;
+}
+table.booktabs * {
+  border: 0;
+}
+table.booktabs th {
+  border-bottom: thin solid;
+}
+
+/* numbered tables (counter defined in div.document) */
+table.numbered > caption:before {
+  counter-increment: table;
+  content: "Table " counter(table) ": ";
+  font-weight: bold;
+}
+
+/* Explicit Markup Blocks   */
+/* ======================   */
+
+/* Footnotes and Citations  */
+/* -----------------------  */
+
+/* line on the left */
+dl.footnote {
+  padding-left: 1ex;
+  border-left: solid;
+  border-left-width: thin;
+}
+
+/* Directives               */
+/* ----------               */
+
+/* Body Elements            */
+/* ~~~~~~~~~~~~~            */
+
+/* Images and Figures */
+
+/* let content flow to the side of aligned images and figures */
+.figure.align-left,
+img.align-left,
+object.align-left {
+  display: block;
+  clear: left;
+  float: left;
+  margin-right: 1em
+}
+.figure.align-right,
+img.align-right,
+object.align-right {
+  display: block;
+  clear: right;
+  float: right;
+  margin-left: 1em
+}
+/* Stop floating sidebars, images and figures at section level 1,2,3 */
+h1, h2, h3 { clear: both; }
+
+/* Sidebar */
+
+/* Move into the margin. In a layout with fixed margins, */
+/* it can be moved into the margin completely.		 */
+div.sidebar {
+  width: 30%;
+  max-width: 26em;
+  margin-left: 1em;
+  margin-right: -5.5%;
+  background-color: #ffffee ;
+}
+
+/* Code                     */
+
+pre.code { padding: 0.7ex }
 pre.code, code { background-color: #eeeeee }
+pre.code .ln { color: gray; } /* line numbers */
+/* basic highlighting: for a complete scheme, see */
+/* http://docutils.sourceforge.net/sandbox/stylesheets/ */
 pre.code .comment, code .comment { color: #5C6576 }
 pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
 pre.code .literal.string, code .literal.string { color: #0C5404 }
@@ -262,78 +509,50 @@ pre.code .name.builtin, code .name.builtin { color: #352B84 }
 pre.code .deleted, code .deleted { background-color: #DEB0A1}
 pre.code .inserted, code .inserted { background-color: #A3D289}
 
-span.classifier {
-  font-family: sans-serif ;
-  font-style: oblique }
+/* Math                     */
+/* styled separately (see math.css for math-output=HTML) */
 
-span.classifier-delimiter {
-  font-family: sans-serif ;
-  font-weight: bold }
+/* Epigraph                 */
+/* Highlights               */
+/* Pull-Quote               */
+/* Compound Paragraph       */
+/* Container                */
 
-span.interpreted {
-  font-family: sans-serif }
+/* can be styled in a custom stylesheet */
 
-span.option {
-  white-space: nowrap }
+/* Document Header and Footer */
 
-span.pre {
-  white-space: pre }
-
-span.problematic {
-  color: red }
-
-span.section-subtitle {
-  /* font-size relative to parent (h1..h6 element) */
-  font-size: 80% }
-
-table.citation {
-  border-left: solid 1px gray;
-  margin-left: 1px }
-
-table.docinfo {
-  margin: 2em 4em }
-
-table.docutils {
-  margin-top: 0.5em ;
-  margin-bottom: 0.5em }
-
-table.footnote {
-  border-left: solid 1px black;
-  margin-left: 1px }
-
-table.docutils td, table.docutils th,
-table.docinfo td, table.docinfo th {
-  padding-left: 0.5em ;
-  padding-right: 0.5em ;
-  vertical-align: top }
-
-table.docutils th.field-name, table.docinfo th.docinfo-name {
-  font-weight: bold ;
-  text-align: left ;
-  white-space: nowrap ;
-  padding-left: 0 }
-
-/* "booktabs" style (no vertical lines) */
-table.docutils.booktabs {
-  border: 0px;
-  border-top: 2px solid;
-  border-bottom: 2px solid;
-  border-collapse: collapse;
-}
-table.docutils.booktabs * {
-  border: 0px;
-}
-table.docutils.booktabs th {
-  border-bottom: thin solid;
-  text-align: left;
+div.footer, div.header {
+  clear: both;
+  font-size: smaller;
 }
 
-h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
-h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
-  font-size: 100% }
+/* Inline Markup            */
+/* =============            */
 
-ul.auto-toc {
-  list-style-type: none }
+/* Emphasis                 */
+/*   em                     */
+/* Strong Emphasis          */
+/*   strong		    */
+/* Interpreted Text         */
+/*   span.interpreted  	    */
+/* Title Reference 	    */
+/*   cite		    */
+/* Inline Literals          */
+/* possible values: normal, nowrap, pre, pre-wrap, pre-line */
+/*   span.docutils.literal { white-space: pre-wrap; } */
+
+/* Hyperlink References     */
+a { text-decoration: none; }
+
+/* External Targets         */
+/*   span.target.external   */
+/* Internal Targets  	    */
+/*   span.target.internal   */
+/* Footnote References      */
+/*   a.footnote-reference   */
+/* Citation References      */
+/*   a.citation-reference   */
 
 </style>
 </head>
@@ -358,42 +577,42 @@ compatibility breaking changes in future versions.</p>
 <div class="section" id="features">
 <h1>Features</h1>
 <ul class="simple">
-<li>File system independent, easy to use API for file/directory manipulation.</li>
-<li>Detailed <a class="reference external" href="http://ddocs.org/dgamevfs/latest/index.html">API documentation</a>
-(a <a class="reference external" href="http://ddocs.org">DDocs.org</a>) with code examples.</li>
-<li>No external dependencies.</li>
-<li>Seamless access to multiple directories as if they were a single directory.</li>
-<li>Easy to extend with custom file system backend.</li>
-<li>There is no support for ZIP or similar archive formats at the moment.</li>
-<li>There is no support for deleting files/directories, and none is planned.</li>
-<li>There are no security features and none are planned.</li>
+<li><p>File system independent, easy to use API for file/directory manipulation.</p></li>
+<li><p>Detailed <a class="reference external" href="http://ddocs.org/dgamevfs/~master/index.html">API documentation</a>
+(at <a class="reference external" href="http://ddocs.org">DDocs.org</a>) with code examples.</p></li>
+<li><p>No external dependencies.</p></li>
+<li><p>Seamless access to multiple directories as if they were a single directory.</p></li>
+<li><p>Easy to extend with custom file system backend.</p></li>
+<li><p>There is no support for ZIP or similar archive formats at the moment.</p></li>
+<li><p>There is no support for deleting files/directories, and none is planned.</p></li>
+<li><p>There are no security features and none are planned.</p></li>
 </ul>
 </div>
 <div class="section" id="directory-structure">
 <h1>Directory structure</h1>
-<table border="1" class="docutils">
+<table>
 <colgroup>
-<col width="17%" />
-<col width="83%" />
+<col style="width: 17%" />
+<col style="width: 83%" />
 </colgroup>
-<thead valign="bottom">
-<tr><th class="head">Directory</th>
-<th class="head">Contents</th>
+<thead>
+<tr><th class="head"><p>Directory</p></th>
+<th class="head"><p>Contents</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr><td><tt class="docutils literal">./</tt></td>
-<td>This README file, utility scripts.</td>
+<tbody>
+<tr><td><p><span class="docutils literal">./</span></p></td>
+<td><p>This README file, utility scripts.</p></td>
 </tr>
-<tr><td><tt class="docutils literal">./doc</tt></td>
-<td>API documentation, also found
-<a class="reference external" href="http://defenestrate.eu/docs/dgamevfs">online</a></td>
+<tr><td><p><span class="docutils literal">./doc</span></p></td>
+<td><p>API documentation, also found
+<a class="reference external" href="http://defenestrate.eu/docs/dgamevfs">online</a></p></td>
 </tr>
-<tr><td><tt class="docutils literal">./source</tt></td>
-<td>Source code.</td>
+<tr><td><p><span class="docutils literal">./source</span></p></td>
+<td><p>Source code.</p></td>
 </tr>
-<tr><td><tt class="docutils literal">./examples</tt></td>
-<td>Code examples.</td>
+<tr><td><p><span class="docutils literal">./examples</span></p></td>
+<td><p>Code examples.</p></td>
 </tr>
 </tbody>
 </table>
@@ -405,9 +624,9 @@ compatibility breaking changes in future versions.</p>
 <p>Digital Mars D compiler, or DMD, is the most commonly used D compiler. You can find its
 newest version <a class="reference external" href="http://dlang.org/download.html">here</a>.  Download the version of DMD
 for your operating system and install it.</p>
-<div class="note">
-<p class="first admonition-title">Note</p>
-<p class="last">Other D compilers exist, such as
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Other D compilers exist, such as
 <a class="reference external" href="http://gdcproject.org/">GDC</a> and
 <a class="reference external" href="http://bitbucket.org/goshawk/gdc/wiki/Home">LDC</a>.</p>
 </div>
@@ -424,11 +643,10 @@ separately. See
 <div class="section" id="simple-d-gamevfs-project">
 <h2>Simple D:GameVFS project</h2>
 <p>Create a directory for your project. To have something for D:GameVFS to work with,
-create subdirectories <tt class="docutils literal">main_data</tt> and <tt class="docutils literal">user_data</tt> in the project directory. In these
+create subdirectories <span class="docutils literal">main_data</span> and <span class="docutils literal">user_data</span> in the project directory. In these
 directories, create some random files or subdirectories.  Create a file called
-<tt class="docutils literal">main.d</tt> in your project directory. Paste the following code into the file:</p>
-<pre class="code d literal-block">
-<span class="keyword">import</span> <span class="name">std</span><span class="punctuation">.</span><span class="name">stdio</span><span class="punctuation">;</span>
+<span class="docutils literal">main.d</span> in your project directory. Paste the following code into the file:</p>
+<pre class="code d literal-block"><code><span class="keyword">import</span> <span class="name">std</span><span class="punctuation">.</span><span class="name">stdio</span><span class="punctuation">;</span>
 <span class="keyword">import</span> <span class="name">std</span><span class="punctuation">.</span><span class="name">typecons</span><span class="punctuation">;</span>
 <span class="keyword">import</span> <span class="name">dgamevfs</span><span class="punctuation">.</span><span class="name">_</span><span class="punctuation">;</span>
 
@@ -458,36 +676,35 @@ directories, create some random files or subdirectories.  Create a file called
     <span class="name">file</span><span class="punctuation">.</span><span class="name">input</span><span class="punctuation">.</span><span class="name">read</span><span class="punctuation">(</span><span class="keyword">cast</span><span class="punctuation">(</span><span class="keyword type">void</span><span class="punctuation">[])</span> <span class="name">buffer</span><span class="punctuation">);</span>
 
     <span class="name">writeln</span><span class="punctuation">(</span><span class="name">buffer</span><span class="punctuation">);</span>
-<span class="punctuation">}</span>
-</pre>
-<p>Code for this example can be found in the <tt class="docutils literal">examples/getting_started</tt> directory.</p>
-<p>See the API documentation in the <tt class="docutils literal">doc/html/</tt> directory (in particular, the
+<span class="punctuation">}</span></code></pre>
+<p>Code for this example can be found in the <span class="docutils literal">examples/getting_started</span> directory.</p>
+<p>See the API documentation in the <span class="docutils literal">doc/html/</span> directory (in particular, the
 <em>dgamevfs.vfs</em> module) for more code examples.</p>
 </div>
 <div class="section" id="explanation-of-the-code">
 <h2>Explanation of the code</h2>
 <p>We start by importing <em>dgamevfs._</em> which imports all needed D:GameVFS modules.
 D:GameVFS uses the <em>Flag</em> template instead of booleans for more descriptive parameters
-(such as <tt class="docutils literal">Yes.writable</tt> instead of <tt class="docutils literal">true</tt>). You need to import <em>std.typecons</em> to use
+(such as <span class="docutils literal">Yes.writable</span> instead of <span class="docutils literal">true</span>). You need to import <em>std.typecons</em> to use
 <em>Flag</em>.</p>
 <p>We create two <em>FSDirs</em> - physical file system directory objects, which will be called
-<tt class="docutils literal">main</tt> and <tt class="docutils literal">user</tt> in the VFS and will represent the <tt class="docutils literal">main_data</tt> and <tt class="docutils literal">user_data</tt>
-directories which we've created in our project directory.  We construct <tt class="docutils literal">main</tt> as
+<span class="docutils literal">main</span> and <span class="docutils literal">user</span> in the VFS and will represent the <span class="docutils literal">main_data</span> and <span class="docutils literal">user_data</span>
+directories which we've created in our project directory.  We construct <span class="docutils literal">main</span> as
 a non-writable directory - it's read-only for the VFS.</p>
 <p>Next, we create a <em>StackDir</em> and <em>mount()</em> our directories to it. <em>StackDir</em> works with
 mounted directories as if they were a single directory - for instance, reading
-<tt class="docutils literal">file.txt</tt> from the StackDir, will first try to read <tt class="docutils literal">user_data/file.txt</tt>, and if
-that file does not exist, <tt class="docutils literal">main_data/file.txt</tt>.  Files in directories mounted later
+<span class="docutils literal">file.txt</span> from the StackDir, will first try to read <span class="docutils literal">user_data/file.txt</span>, and if
+that file does not exist, <span class="docutils literal">main_data/file.txt</span>.  Files in directories mounted later
 take precedence over those mounted earlier.</p>
 <p><em>StackDir</em> makes it possible, for example, to have a main game directory with common
 files and a mod directory overriding some of those files.</p>
-<p>Then we iterate over all files in the <em>StackDir</em> recursively (using the <tt class="docutils literal">Yes.deep</tt>
+<p>Then we iterate over all files in the <em>StackDir</em> recursively (using the <span class="docutils literal">Yes.deep</span>
 argument) - including files in subdirectories. Path of each file in the VFS is printed.
-You should see in the output that the files' paths specify <tt class="docutils literal">stack</tt> as their parent
-since <tt class="docutils literal">main</tt> and <tt class="docutils literal">user</tt> are mounted to <tt class="docutils literal">stack</tt>. (Note that the paths will refer to
-<tt class="docutils literal">stack</tt> as parent even if iterating over <tt class="docutils literal">main</tt> and <tt class="docutils literal">user</tt> - as those are now
-mounted to <tt class="docutils literal">stack</tt>.)</p>
-<p>Then we get a <em>VFSFile</em> - D:GameVFS file object - from the <tt class="docutils literal">stack</tt> directory.  This
+You should see in the output that the files' paths specify <span class="docutils literal">stack</span> as their parent
+since <span class="docutils literal">main</span> and <span class="docutils literal">user</span> are mounted to <span class="docutils literal">stack</span>. (Note that the paths will refer to
+<span class="docutils literal">stack</span> as parent even if iterating over <span class="docutils literal">main</span> and <span class="docutils literal">user</span> - as those are now
+mounted to <span class="docutils literal">stack</span>.)</p>
+<p>Then we get a <em>VFSFile</em> - D:GameVFS file object - from the <span class="docutils literal">stack</span> directory.  This
 file does not exist yet (unless you created it). It will be created when we write to it.</p>
 <p>To obtain writing access, we get the <em>VFSFileOutput</em> struct using the <em>VFSFile.output()</em>
 method. <em>VFSFileOutput</em> provides basic output functionality.  It uses reference counting
@@ -495,8 +712,8 @@ to automatically close the file when you are done with it. Since we just want to
 some simple text, we call its <em>write()</em> method directly. <em>VFSFileOutput.write()</em> writes
 a raw buffer of data to the file, similarly to <em>fwrite()</em> from the C standard library.</p>
 <p>Note that we're working on a file from a <em>StackDir</em>. <em>StackDir</em> decides where to
-actually write the data. In our case, the newest mounted directory is <tt class="docutils literal">user</tt>, which is
-also writable, so the data is written to <tt class="docutils literal">user_data/new_file.txt</tt>.</p>
+actually write the data. In our case, the newest mounted directory is <span class="docutils literal">user</span>, which is
+also writable, so the data is written to <span class="docutils literal">user_data/new_file.txt</span>.</p>
 <p>In the end, we read the data back using the <em>VFSFileInput</em> class - input analog of
 <em>VFSFileOutput</em> - which we get with the <em>VFSFile.input()</em> method.  We read with the
 <em>VFSFileInput.read()</em> method, which reads data to provided buffer, up to the buffer
@@ -509,9 +726,8 @@ as much data as available and returns the part of the buffer containing the read
 <div class="section" id="compiling">
 <h2>Compiling</h2>
 <p>We're going to use dub, which we installed at the beginning, to compile our project.</p>
-<p>Create a file called <tt class="docutils literal">dub.json</tt> with the following contents:</p>
-<pre class="code json literal-block">
-<span class="punctuation">{</span>
+<p>Create a file called <span class="docutils literal">dub.json</span> with the following contents:</p>
+<pre class="code json literal-block"><code><span class="punctuation">{</span>
     <span class="name tag">&quot;name&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;getting-started&quot;</span><span class="punctuation">,</span>
     <span class="name tag">&quot;targetType&quot;</span><span class="punctuation">:</span> <span class="literal string double">&quot;executable&quot;</span><span class="punctuation">,</span>
     <span class="name tag">&quot;sourceFiles&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="literal string double">&quot;main.d&quot;</span><span class="punctuation">],</span>
@@ -520,19 +736,16 @@ as much data as available and returns the part of the buffer containing the read
     <span class="punctuation">{</span>
         <span class="name tag">&quot;dgamevfs&quot;</span><span class="punctuation">:</span> <span class="punctuation">{</span> <span class="name tag">&quot;version&quot;</span> <span class="punctuation">:</span> <span class="literal string double">&quot;~&gt;0.2.0&quot;</span> <span class="punctuation">},</span>
     <span class="punctuation">},</span>
-<span class="punctuation">}</span>
-</pre>
-<p>This file tells dub that we're building an executable called <tt class="docutils literal"><span class="pre">getting-started</span></tt> from
-a D source file <tt class="docutils literal">main.d</tt>, and that our project depends on D:GameVFS 0.5.0 or any
+<span class="punctuation">}</span></code></pre>
+<p>This file tells dub that we're building an executable called <span class="docutils literal"><span class="pre">getting-started</span></span> from
+a D source file <span class="docutils literal">main.d</span>, and that our project depends on D:GameVFS 0.5.0 or any
 newer, bugfix release of D:GameVFS 0.5 . DUB will automatically find and download the
 correct version of D:YAML when the project is built.</p>
 <p>Now run the following command in your project's directory:</p>
-<pre class="literal-block">
-dub build
-</pre>
+<pre class="literal-block">dub build</pre>
 <p>dub will automatically download D:GameVFS and compile it, and then then it will compile
-our program.  This will generate an executable called <tt class="docutils literal"><span class="pre">getting-started</span></tt> or
-<tt class="docutils literal"><span class="pre">getting-started.exe</span></tt> in your directory.</p>
+our program.  This will generate an executable called <span class="docutils literal"><span class="pre">getting-started</span></span> or
+<span class="docutils literal"><span class="pre">getting-started.exe</span></span> in your directory.</p>
 </div>
 </div>
 <div class="section" id="license">
@@ -543,10 +756,9 @@ This license allows you to use the source code in your own projects, open source
 or proprietary, and to modify it to suit your needs. However, in source
 distributions, you have to preserve the license headers in the source code and
 the accompanying license file.</p>
-<p>Full text of the license can be found in file <tt class="docutils literal">LICENSE_1_0.txt</tt> and is also
+<p>Full text of the license can be found in file <span class="docutils literal">LICENSE_1_0.txt</span> and is also
 displayed here:</p>
-<pre class="literal-block">
-Boost Software License - Version 1.0 - August 17th, 2003
+<pre class="literal-block">Boost Software License - Version 1.0 - August 17th, 2003
 
 Permission is hereby granted, free of charge, to any person or organization
 obtaining a copy of the software and accompanying documentation covered by
@@ -568,8 +780,7 @@ FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT
 SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE
 FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-DEALINGS IN THE SOFTWARE.
-</pre>
+DEALINGS IN THE SOFTWARE.</pre>
 </div>
 <div class="section" id="credits">
 <h1>Credits</h1>
