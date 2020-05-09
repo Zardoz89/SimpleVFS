@@ -272,9 +272,8 @@ class StackDir : VFSDir
         void mount(VFSDir dir) @safe
         {
             enforce(!canFind!((a, b){return a.name == b.name;})(stack_, dir),
-                    mountError("Could not mount directory ", dir.path, " to stacked "
-                                "directory ", this.path, " as there is already a "
-                                "mounted directory  with the same name"));
+                    mountError("Could not mount directory ", dir.path, " to stacked directory ", this.path, 
+                      " as there is already a mounted directory with the same name"));
             if(dir.parent !is null)
             {
                 dir = getCopyWithoutParent(dir);

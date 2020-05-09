@@ -280,10 +280,12 @@ struct VFSRange(T) if(is(T == VFSDir) || is(T == VFSFile))
 {
     public:
         ///Function used to _compare items alphabetically.
-        static bool compare(T a, T b){return 0 < cmp(a.path, b.path);}
+        static bool compare(inout(T) a, inout(T) b) { 
+          return 0 < cmp(a.path, b.path);
+        }
 
         ///Type used to store the items.
-        alias RedBlackTree!(T, compare, false) Items;
+        alias Items = RedBlackTree!(T, compare);
 
     private:
         //Item storage.
@@ -334,10 +336,10 @@ struct VFSRange(T) if(is(T == VFSDir) || is(T == VFSFile))
 }
 
 ///A VFSRange of directories.
-alias VFSRange!VFSDir VFSDirs;
+alias VFSDirs = VFSRange!VFSDir;
 
 ///A VFSRange of files.
-alias VFSRange!VFSFile VFSFiles;
+alias VFSFiles = VFSRange!VFSFile;
 
 
 /**
@@ -542,9 +544,8 @@ abstract class VFSFile
         void invariant_() @safe const nothrow
         {
             assert(noParent_ || parent_.exists,
-                   "File with a nonexistent parent directory "
-                   " - this shouldn't happen as a directory should only "
-                   "provide access to its files if it exists");
+                   "File with a nonexistent parent directory  - this shouldn't happen as a directory should only "
+                   ~ "provide access to its files if it exists");
         }
 }
 

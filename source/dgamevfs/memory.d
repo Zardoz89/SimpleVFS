@@ -100,8 +100,7 @@ class MemoryDir : VFSDir
         override VFSDir dir(string path)
         {
             enforce(exists,
-                    notFound("Trying to access subdirectory ", path, " in memory "
-                              "directory ", this.path, " that does not exist"));
+                    notFound("Trying to access subdirectory ", path, " in memory directory ", this.path, " that does not exist"));
             string rest;
             string neededSubdir = expectSubdir(path, rest);
             //Dir is in a subdirectory.
