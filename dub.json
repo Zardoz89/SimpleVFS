@@ -1,11 +1,11 @@
 {
-    "name": "dgamevfs",
+    "name": "simplevfs",
     "description": "Minimalist virtual file system for game development",
     "copyright": "Copyright © 2011-2014, Ferdinand Majerech",
     "authors": ["Ferdinand Majerech"],
     "importPaths": ["source"],
     "license": "Boost 1.0",
-    "homepage": "https://github.com/kiith-sa/D-GameVFS",
+    "homepage": "https://github.com/Zardoz89/SimpleVFS",
 
     "buildTypes":
     {
@@ -16,6 +16,10 @@
     "subPackages": [
       "examples/getting_started",
       "examples/vfsfile"
-    ]
+    ],
+    "toolchainRequirements": {
+        "dub": ">=1.19.0",
+        "frontend": ">=2.090"
+    }
 }
 

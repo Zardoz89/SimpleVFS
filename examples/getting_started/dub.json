@@ -5,7 +5,7 @@
   "mainSourceFile": "main.d",
   "dependencies":
   {
-    "dgamevfs": {
+    "simplevfs": {
       "version": "*",
       "path": "../.."
     }

@@ -18,12 +18,7 @@ fi
 dub test --compiler=$DC
 
 # Run examples tests
-pushd examples/getting_started
-dub run --compiler=$DC -q
-popd
-
-pushd examples/vfsfile
-dub run --compiler=$DC -q
-popd
+dub test :getting-started --compiler=$DC -q
+dub test :vfsfile --compiler=$DC -q
 
 
