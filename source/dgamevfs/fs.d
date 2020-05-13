@@ -343,15 +343,20 @@ class FSFile : VFSFile
             enforce(position <= length,
                     ioError("Trying to seek beyond the end of file: " ~ path));
 
-            static if(size_t.sizeof == 4)
-            {
+            // TODO Refactor how is handling fseek using long or int on Posix platforms
+            version (Posix) {
+                // Only on POSIX fseek(file, offset) changes the offset type to long
+                static if(size_t.sizeof == 4) {
+                    enforce(offset <= int.max,
+                            ioError("Seeking beyond 2 GiB not supported on 32bit. File: " ~ path));
+                    const platformOffset = cast(int)offset;
+                } else {
+                    alias platformOffset = offset;
+                }
+            } else {
                 enforce(offset <= int.max,
-                        ioError("Seeking beyond 2 GiB not supported on 32bit. File: " ~ path));
+                    ioError("Seeking beyond 2 GiB isn't actually supported on Windows. File: " ~ path));
                 const platformOffset = cast(int)offset;
-            }
-            else
-            {
-                alias offset platformOffset;
             }
 
             if(fseek(file_, platformOffset,
