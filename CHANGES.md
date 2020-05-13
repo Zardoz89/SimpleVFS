@@ -1,15 +1,10 @@
-SimpleVFS changelog
-===================
+# SimpleVFS changelog
 
------
-0.2.1
------
+## 0.2.1
 
 Last version being source compatible with D:GameVFS (I hope)
 
-^^^^^^^^^^^^^^^^
-Breaking changes
-^^^^^^^^^^^^^^^^
+### Breaking changes
 
 - Deprecated '_' module by package.d . So use "import dgamevfs;", instead of "import dgamevfs._;"
 - Compatibility with DMD 2.090.
@@ -17,22 +12,15 @@ Breaking changes
 - Added .editorconfig and update .gitignore
 - GitHub pages with the generated documentation
 
-^^^^^^^^
-Bugfixes
-^^^^^^^^
+### Bugfixes
 
 - Fix error with fseek on Windows enviroments.
 
-D:GameVFS changelog
-===================
+# D:GameVFS changelog
 
------
-0.2.0
------
+## 0.2.0
 
-^^^^^^^^^^^^^^^^
-Breaking changes
-^^^^^^^^^^^^^^^^
+### Breaking changes
 
 - The ``cdc.d`` build script has been removed; dub is now the only 'official'
   way to build D:GameVFS.
@@ -40,9 +28,7 @@ Breaking changes
   get D:YAML to work.
 - Broke compatibility with all DMD versions before 2.066
 
-^^^^^^^^^^^^^^^^
-API improvements
-^^^^^^^^^^^^^^^^
+### API improvements
 
 - ``VFSDirs`` with a parent ``VFSDir`` can now be mounted into a ``StackDir``.
 - More ``@safe pure nothrow`` in the API.
@@ -50,16 +36,12 @@ API improvements
 - ``physicalFSFile()`` function to load an ``FSFile`` outside of the VFS. Allows to use 
   the same API for files in and outside of the VFS.
 
-^^^^^^^^^^^^^^^^^^
-Other improvements
-^^^^^^^^^^^^^^^^^^
+### Other improvements
 
 - Compatibility with DMD 2.066.
 - Updated documentation, example to reflect changes.
 
-^^^^^^^^
-Bugfixes
-^^^^^^^^
+### Bugfixes
 
 - File/directory paths are no longer compared cese-insensitively in ``VFSRange``.
 - Explicit packages can now be used to address files in nested StackDirs.

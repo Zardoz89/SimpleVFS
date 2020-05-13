@@ -1,18 +1,11 @@
-====================================
-SimpleVFS
-====================================
+# SimpleVFS
 
-.. image:: https://travis-ci.org/Zardoz89/SimpleVFS.svg?branch=master
-    :target: https://travis-ci.org/Zardoz89/SimpleVFS
-.. image:: https://ci.appveyor.com/api/projects/status/aeweptftfnedcyxl/branch/master?svg=true
-    :target: https://ci.appveyor.com/project/Zardoz89/simplevfs/branch/master
+[![Build Status](https://travis-ci.org/Zardoz89/SimpleVFS.svg?branch=master)](https://travis-ci.org/Zardoz89/SimpleVFS)
+[![Build status](https://ci.appveyor.com/api/projects/status/aeweptftfnedcyxl/branch/master?svg=true)](https://ci.appveyor.com/project/Zardoz89/simplevfs/branch/master)
 
+## Introduction
 
-------------
-Introduction
-------------
-
-SimpleVFS it's a fork from `D-GameVFS: <https://github.com/kiith-sa/D-GameVFS>`_ that updates to the latest changes of the 
+SimpleVFS it's a fork from [D-GameVFS](https://github.com/kiith-sa/D-GameVFS>) that updates to the latest changes of the 
 language, and attempt to polish and finish the previous works.
 
 D:GameVFS, and by extension SimpleVFS, is a minimalist open source virtual file system library for the
@@ -24,10 +17,7 @@ SimpleVFS can't handle a situation when a file it's working with is deleted
 outside the program. Only files in a physical file system are supported at the
 moment. There is no archive support right now.
 
-
---------
-Features
---------
+## Features
 
 * File system independent, easy to use API for file/directory manipulation.
 * No external dependencies.
@@ -37,49 +27,35 @@ Features
 * There is no support for deleting files/directories, and none is planned.
 * There are no security features and none are planned.
 
+## Directory structure
 
--------------------
-Directory structure
--------------------
+|Directory    | Contents
+|------------ |:----------------------------------
+|``./``           | This README file, utility scripts.
+|``./docs``       | API documentation
+|``./source``     | Source code.
+|``./examples``   | Code examples.
+|``./scripts``    | Utility scripts for CI, etc
 
-===============  =======================================================================
-Directory        Contents
-===============  =======================================================================
-``./``           This README file, utility scripts.
-``./docs``       API documentation
-``./source``     Source code.
-``./examples``   Code examples.
-===============  =======================================================================
+## Getting started
 
-
----------------
-Getting started
----------------
-
-^^^^^^^^^^^^^^^^^^^^^^^^
-Install the DMD compiler
-^^^^^^^^^^^^^^^^^^^^^^^^
+### Install the DMD compiler
 
 Digital Mars D compiler, or DMD, is the most commonly used D compiler. You can find its
 newest version `here <http://dlang.org/download.html>`_.  Download the version of DMD
 for your operating system and install it.
 
-.. note::
-   Other D compilers exist, such as
-   `GDC <http://gdcproject.org/>`_ and
-   `LDC <http://bitbucket.org/goshawk/gdc/wiki/Home>`_.
+**Note:**
+   Other D compilers exist, such as [GDC](http://gdcproject.org/) and [LDC](http://bitbucket.org/goshawk/gdc/wiki/Home).
 
+### Simple SimpleVFS project
 
-^^^^^^^^^^^^^^^^^^^^^^^^
-Simple SimpleVFS project
-^^^^^^^^^^^^^^^^^^^^^^^^
-
-Create a directory for your project. To have something for D:GameVFS to work with,
+Create a directory for your project. To have something for SimpleVFS to work with,
 create subdirectories ``main_data`` and ``user_data`` in the project directory. In these
 directories, create some random files or subdirectories.  Create a file called
 ``main.d`` in your project directory. Paste the following code into the file:
 
-.. code-block:: d
+```d
 
    import std.stdio;
    import std.typecons;
@@ -112,18 +88,15 @@ directories, create some random files or subdirectories.  Create a file called
 
        writeln(buffer);
    }
-
+```
 
 Code for this example can be found in the ``examples/getting_started`` directory.
 
 See the API documentation for more code examples.
 
+### Explanation of the code
 
-^^^^^^^^^^^^^^^^^^^^^^^
-Explanation of the code
-^^^^^^^^^^^^^^^^^^^^^^^
-
-We start by importing *dgamevfs._* which imports all needed D:GameVFS modules.
+We start by importing *dgamevfs* which imports all needed D:GameVFS modules.
 D:GameVFS uses the *Flag* template instead of booleans for more descriptive parameters
 (such as ``Yes.writable`` instead of ``true``). You need to import *std.typecons* to use
 *Flag*.
@@ -169,20 +142,15 @@ length. We determine how large buffer we need to read the entire file with the
 *VFSFile.bytes()* method. The buffer might also be larger than the file - *read()* reads
 as much data as available and returns the part of the buffer containing the read data.
 
-For more details about SimpleVFS API, see the
-`documentation <https://zardoz89.github.io/SimpleVFS/docs.html>`_.
+For more details about SimpleVFS API, see the online [documentation](https://zardoz89.github.io/SimpleVFS/docs.html).
 
+### Compiling
 
-^^^^^^^^^
-Compiling
-^^^^^^^^^
-
-We're going to use dub, which we installed at the beginning, to compile our project.
+We're going to use dub, which is installed with DMD (or LDC or GDC), to compile our project.
 
 Create a file called ``dub.json`` with the following contents:
 
-.. code-block:: json
-
+```json
    {
        "name": "getting-started",
        "targetType": "executable",
@@ -190,30 +158,30 @@ Create a file called ``dub.json`` with the following contents:
        "mainSourceFile": "main.d",
        "dependencies":
        {
-           "gamedvfs": { "version" : "~>0.2.1" },
+           "simplevfs": { "version" : "~>0.2.1" }
        },
    }
+```
 
 This file tells dub that we're building an executable called ``getting-started`` from
-a D source file ``main.d``, and that our project depends on D:GameVFS 0.5.0 or any
-newer, bugfix release of D:GameVFS 0.5 . DUB will automatically find and download the
-correct version of D:YAML when the project is built.
+a D source file ``main.d``, and that our project depends on SimpleVFS 0.2.1 or any
+newer, bugfix release of SimpleVFS 0.2.1 . DUB will automatically find and download the
+correct version of SimpleVFS when the project is built.
 
 Now run the following command in your project's directory::
 
+```bash
    dub build
+```
 
-dub will automatically download D:GameVFS and compile it, and then then it will compile
+dub will automatically download SimpleVFS and compile it, and then then it will compile
 our program.  This will generate an executable called ``getting-started`` or
 ``getting-started.exe`` in your directory.
 
+## License
 
--------
-License
--------
-
-D:GameVFS is released under the terms of the
-`Boost Software License 1.0 <http://www.boost.org/LICENSE_1_0.txt>`_.
+SimpleVFS is released under the terms of the
+[Boost Software License 1.0](http://www.boost.org/LICENSE_1_0.txt).
 This license allows you to use the source code in your own projects, open source
 or proprietary, and to modify it to suit your needs. However, in source
 distributions, you have to preserve the license headers in the source code and
@@ -246,17 +214,14 @@ displayed here::
     ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
     DEALINGS IN THE SOFTWARE.
 
-
--------
-Credits
--------
+## Credits
 
 D:GameVFS was created by Ferdinand Majerech aka Kiith-Sa kiithsacmp[AT]gmail.com .
 
 SimpleVFS was a fork created by Luis Panadero Guardeño aka Zardoz luis.panadero[AT]gmail.com .
 
-The API was inspired the VFS API of the
-`Tango library <http://www.dsource.org/projects/tango/>`_.
+The API was inspired the VFS API of the [Tango library](http://www.dsource.org/projects/tango/).
 
 D:GameVFS was created using Vim and DMD on Debian, Ubuntu and Linux Mint as a VFS
-library in the `D programming language <http://www.d-programming-language.org>`_.
+library in the [D programming language](http://www.d-programming-language.org).
+
