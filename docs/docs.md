@@ -21,7 +21,7 @@ create subdirectories ``main_data`` and ``user_data`` in the project directory. 
 directories, create some random files or subdirectories.  Create a file called
 ``main.d`` in your project directory. Paste the following code into the file:
 
-```
+```D
    import std.stdio;
    import std.typecons;
    import dgamevfs;
