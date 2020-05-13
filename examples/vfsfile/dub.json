@@ -3,6 +3,7 @@
   "targetType": "executable",
   "sourceFiles": ["main.d"],
   "mainSourceFile": "main.d",
+  "importPaths" : ["."],
   "dependencies":
   {
     "simplevfs": {
