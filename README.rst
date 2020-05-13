@@ -4,6 +4,9 @@ SimpleVFS
 
 .. image:: https://travis-ci.org/Zardoz89/SimpleVFS.svg?branch=master
     :target: https://travis-ci.org/Zardoz89/SimpleVFS
+.. image:: https://ci.appveyor.com/api/projects/status/aeweptftfnedcyxl/branch/master?svg=true
+    :target: https://ci.appveyor.com/project/Zardoz89/simplevfs/branch/master
+
 
 ------------
 Introduction
