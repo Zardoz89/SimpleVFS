@@ -1,27 +1,26 @@
 ====================================
-GamedVFS 0.2.1 A fork from D-GameVFS
+SimpleVFS
 ====================================
 
-.. image:: https://travis-ci.org/Zardoz89/GamedVFS.svg?branch=master
+.. image:: https://travis-ci.org/Zardoz89/SimpleVFS.svg?branch=master
+    :target: https://travis-ci.org/Zardoz89/SimpleVFS
 
 ------------
 Introduction
 ------------
 
-D:GameVFS is a minimalist open source virtual file system library for the
+SimpleVFS it's a fork from `D-GameVFS: <https://github.com/kiith-sa/D-GameVFS>`_ that updates to the latest changes of the 
+language, and attempt to polish and finish the previous works.
+
+D:GameVFS, and by extension SimpleVFS, is a minimalist open source virtual file system library for the
 D programming language oriented at game developers.
 
 Provided functionality is very basic - files and directories can be created,
 read and written, but not deleted. There are no security features - e.g.
-D:GameVFS can't handle a situation when a file it's working with is deleted
+SimpleVFS can't handle a situation when a file it's working with is deleted
 outside the program. Only files in a physical file system are supported at the
 moment. There is no archive support right now.
 
-D:GameVFS is a work in progress and its API is not stable. There might be
-compatibility breaking changes in future versions.
-
-GamedVFS it's a fork from `D-GameVFS: <https://github.com/kiith-sa/D-GameVFS>`_ that updates to the latest changes of the 
-language, and attempt to polish and finish the previous works.
 
 --------
 Features
@@ -69,7 +68,7 @@ for your operating system and install it.
 
 
 ^^^^^^^^^^^^^^^^^^^^^^^^
-Simple GamedVFS project
+Simple SimpleVFS project
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 Create a directory for your project. To have something for D:GameVFS to work with,
@@ -252,7 +251,7 @@ Credits
 
 D:GameVFS was created by Ferdinand Majerech aka Kiith-Sa kiithsacmp[AT]gmail.com .
 
-GamedVFS was a fork created by Luis Panadero Guardeño aka Zardoz luis.panadero[AT]gmail.com .
+SimpleVFS was a fork created by Luis Panadero Guardeño aka Zardoz luis.panadero[AT]gmail.com .
 
 The API was inspired the VFS API of the
 `Tango library <http://www.dsource.org/projects/tango/>`_.

@@ -1,20 +1,23 @@
+SimpleVFS changelog
+===================
+
 -----
 0.2.1
 -----
+
+Last version being source compatible with D:GameVFS
 
 ^^^^^^^^^^^^^^^^
 Breaking changes
 ^^^^^^^^^^^^^^^^
 
-- Remplaced '_' module by package.d . So use "import dgamevfs;", instead of "import dgamevfs._;"
-
-^^^^^^^^^^^^^^^^^^
-Other improvements
-^^^^^^^^^^^^^^^^^^
-
+- Deprecated '_' module by package.d . So use "import dgamevfs;", instead of "import dgamevfs._;"
 - Compatibility with DMD 2.091.
 - Executing tests on travis
 - Added .editorconfig and update .gitignore
+
+D:GameVFS changelog
+===================
 
 -----
 0.2.0
