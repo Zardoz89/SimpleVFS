@@ -5,16 +5,23 @@ SimpleVFS changelog
 0.2.1
 -----
 
-Last version being source compatible with D:GameVFS
+Last version being source compatible with D:GameVFS (I hope)
 
 ^^^^^^^^^^^^^^^^
 Breaking changes
 ^^^^^^^^^^^^^^^^
 
 - Deprecated '_' module by package.d . So use "import dgamevfs;", instead of "import dgamevfs._;"
-- Compatibility with DMD 2.091.
-- Executing tests on travis
+- Compatibility with DMD 2.090.
+- Executing tests on travis and appveyor
 - Added .editorconfig and update .gitignore
+- GitHub pages with the generated documentation
+
+^^^^^^^^
+Bugfixes
+^^^^^^^^
+
+- Fix error with fseek on Windows enviroments.
 
 D:GameVFS changelog
 ===================
