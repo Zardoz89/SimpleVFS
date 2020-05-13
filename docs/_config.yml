@@ -1,1 +1,7 @@
+name: SimpleVFS
+title: SimpleVFS
+description: SimpleVFS is a minimalist open source virtual file system library for the D programming language oriented at game developers
 theme: jekyll-theme-midnight
+markdown: gfm
+plugins:
+  - jekyll-relative-links
