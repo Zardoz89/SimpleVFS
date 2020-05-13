@@ -116,8 +116,7 @@ directories, create some random files or subdirectories.  Create a file called
 
 Code for this example can be found in the ``examples/getting_started`` directory.
 
-See the API documentation in the ``doc/html/`` directory (in particular, the
-*dgamevfs.vfs* module) for more code examples.
+See the API documentation for more code examples.
 
 
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -170,8 +169,8 @@ length. We determine how large buffer we need to read the entire file with the
 *VFSFile.bytes()* method. The buffer might also be larger than the file - *read()* reads
 as much data as available and returns the part of the buffer containing the read data.
 
-For more details about D:GameVFS API, see the
-`documentation <http://defenestrate.eu/docs/dgamevfs>`_.
+For more details about SimpleVFS API, see the
+`documentation <https://zardoz89.github.io/SimpleVFS/docs.html>`_.
 
 
 ^^^^^^^^^

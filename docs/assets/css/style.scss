@@ -1,0 +1,50 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+#header {
+  height: 80px;
+
+  .menu {
+    position: relative;
+    height: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+
+    ul {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      padding: 0;
+      width: 100%;
+
+      li {
+        line-height: unset;
+        padding: 0 0.5em;
+        margin-right: 0.75em;
+
+        a, a:visited {
+          font-weight: bold;
+          padding: 0;
+          margin: 0;
+          background: unset;
+          border: unset;
+          box-shadow: unset;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+
+        &.current {
+          color: #fff;
+          background-color: #659e10;
+          border: 1px solid #527f0e;
+        }
+      }
+    }
+  }
+}

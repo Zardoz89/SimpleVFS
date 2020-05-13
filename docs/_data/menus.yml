@@ -1,0 +1,7 @@
+menu:
+  - url: index.html
+    name: index.md
+    title: About
+  - url: docs.html
+    name: docs.md
+    title: Documentation

@@ -50,3 +50,6 @@ classes/
 *.iml
 
 *.log
+
+# Jekyll stuff
+docs/_site/
