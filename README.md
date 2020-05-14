@@ -5,7 +5,7 @@
 
 ## Introduction
 
-SimpleVFS it's a fork from [D-GameVFS](https://github.com/kiith-sa/D-GameVFS>) that updates to the latest changes of the 
+SimpleVFS it's a fork from [D-GameVFS](https://github.com/kiith-sa/D-GameVFS) that updates to the latest changes of the 
 language, and attempt to polish and finish the previous works.
 
 D:GameVFS, and by extension SimpleVFS, is a minimalist open source virtual file system library for the
