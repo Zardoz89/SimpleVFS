@@ -3,16 +3,14 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-
-// Utility functions used by D:GameVFS.
-module dgamevfs.util;
-
+/// Utility functions used by SimpleVFS.
+module simplevfs.util;
 
 import std.algorithm;
 import std.array;
 import std.path;
 
-import dgamevfs.exceptions;
+import simplevfs.exceptions;
 
 
 // Is a file/directory name valid (i.e. no directory or package separators)?

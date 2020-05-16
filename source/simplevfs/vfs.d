@@ -4,19 +4,16 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+/// Base classes and structs defining the general API of D:GameVFS.
+module simplevfs.vfs;
 
-module dgamevfs.vfs;
-
-
-///Base classes and structs defining the general API of D:GameVFS.
 import std.container;
 import std.exception;
 import std.path;
 import std.string;
 import std.typecons;
 
-import dgamevfs.exceptions;
-
+import simplevfs.exceptions;
 
 /**
  * A directory in the VFS.

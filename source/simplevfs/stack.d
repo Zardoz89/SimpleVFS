@@ -4,20 +4,17 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-
-///Stacked files/directories for seamless access to multiple directories as if they were a single directory.
-module dgamevfs.stack;
-
+/// Stacked files/directories for seamless access to multiple directories as if they were a single directory.
+module simplevfs.stack;
 
 import std.algorithm;
 import std.exception;
 import std.typecons;
 import std.range;
 
-import dgamevfs.exceptions;
-import dgamevfs.vfs;
-import dgamevfs.util;
-
+import simplevfs.exceptions;
+import simplevfs.vfs;
+import simplevfs.util;
 
 /**
  * A directory seamlessly working on a stack of multiple directories.
@@ -33,15 +30,15 @@ import dgamevfs.util;
  * We have a directory called $(I data) with the following contents:
  * --------------------
  * shaders:
- *     font.frag 
- *     font.vert 
+ *     font.frag
+ *     font.vert
  * logs:
  *     (empty)
  * main.cfg
  * --------------------
  * and a directory called $(I user_data) with the following contents:
  * --------------------
- * shaders: 
+ * shaders:
  *      font.frag
  * logs:
  *      (empty)
@@ -50,7 +47,7 @@ import dgamevfs.util;
  * the following code will work as specified in the comments:
  * --------------------
  * VFSDir data, user_data; //initialized somewhere before
- * 
+ *
  * auto stack = new StackDir("stack");
  * stack.mount(data);
  * stack.mount(user_data);
@@ -69,17 +66,17 @@ import dgamevfs.util;
  * The $(D StackFile) is a stack of all files that map to the same path in
  * the $(D StackDir) in the same order as $(D StackDir)'s mounted directories.
  *
- * For example, when reading or determining file size, the directories in the 
- * stack will be searched from newest to oldest and the first file found will 
+ * For example, when reading or determining file size, the directories in the
+ * stack will be searched from newest to oldest and the first file found will
  * be used.
  *
  * When writing, the file in the newest writable directory will be written to.
  *
  *
- * In some cases, it might be required to access a particular directory in the 
+ * In some cases, it might be required to access a particular directory in the
  * stack. E.g. a game might have multiple packages stacked on top of each other,
  * but sometimes default, non-overridden version of a file could be needed.
- * This can be done using the $(B ::) separator. 
+ * This can be done using the $(B ::) separator.
  *
  * In the context of the previous example:
  *
@@ -104,7 +101,7 @@ class StackDir : VFSDir
     public:
         /**
          * Construct a  $(D StackDir).
-         * 
+         *
          * Params:  name = Name of the  $(D StackDir).
          *
          * Throws:  $(D VFSInvalidPathException) if name is not valid (contains '/' or "::").
@@ -116,7 +113,7 @@ class StackDir : VFSDir
             super(null, name);
         }
 
-        override @property bool writable() @safe pure nothrow const @nogc 
+        override @property bool writable() @safe pure nothrow const @nogc
         {
             foreach(pkg; stack_) if(pkg.writable)
             {
@@ -136,10 +133,10 @@ class StackDir : VFSDir
 
         override VFSFile file(string path)
         {
-            enforce(exists, 
+            enforce(exists,
                     notFound("Trying to access file ", path, " in stack directory ",
                               this.path, " that does not exist"));
-            enforce(stack_. length > 0, 
+            enforce(stack_. length > 0,
                     notFound("Trying to access file ", path, " in stack directory",
                               this.path, " which has no mounted directories"));
 
@@ -174,10 +171,10 @@ class StackDir : VFSDir
 
         override VFSDir dir(string path) @safe
         {
-            enforce(exists, 
-                    notFound("Trying to access subdirectory ", path, 
+            enforce(exists,
+                    notFound("Trying to access subdirectory ", path,
                               " in stack directory ", this.path, " that does not exist"));
-            enforce(stack_. length > 0, 
+            enforce(stack_. length > 0,
                     notFound("Trying to access subdirectory ", path, " in stack directory",
                               this.path, " which has no mounted directories"));
 
@@ -211,8 +208,8 @@ class StackDir : VFSDir
 
         override VFSFiles files(Flag!"deep" deep = No.deep, string glob = null) @trusted
         {
-            enforce(exists, 
-                    notFound("Trying to access files of stack directory ", 
+            enforce(exists,
+                    notFound("Trying to access files of stack directory ",
                               this.path, " that does not exist"));
 
             auto files = new VFSFiles.Items;
@@ -233,8 +230,8 @@ class StackDir : VFSDir
 
         override VFSDirs dirs(Flag!"deep" deep = No.deep, string glob = null) @trusted
         {
-            enforce(exists, 
-                    notFound("Trying to access subdirectories of stack directory ", 
+            enforce(exists,
+                    notFound("Trying to access subdirectories of stack directory ",
                               this.path, " that does not exist"));
 
             auto dirs = new VFSDirs.Items;
@@ -259,20 +256,20 @@ class StackDir : VFSDir
          * Files and directories of a directory mounted later will override
          * those of a directory mounted earlier.
          *
-         * If dir has a parent in the VFS, a parent-less copy will be created and 
+         * If dir has a parent in the VFS, a parent-less copy will be created and
          * mounted. (This has no effect whatsoever on the underlying filesystem -
          * it just removes the need for directories to have multiple parents).
          *
          * Params:  dir = Directory to _mount.
          *
          * Throws:  $(D VFSMountException) if a directory with the same name is
-         *          already mounted, or if dir has this directory as its child 
+         *          already mounted, or if dir has this directory as its child
          *          or a child of any of its subdirectories (circular mounting).
-         */ 
+         */
         void mount(VFSDir dir) @safe
         {
             enforce(!canFind!((a, b){return a.name == b.name;})(stack_, dir),
-                    mountError("Could not mount directory ", dir.path, " to stacked directory ", this.path, 
+                    mountError("Could not mount directory ", dir.path, " to stacked directory ", this.path,
                       " as there is already a mounted directory with the same name"));
             if(dir.parent !is null)
             {
@@ -366,7 +363,7 @@ class StackDir : VFSDir
  * When writing, it will write to the newest file that is writable
  * regardless of whether it already exists or not.
  */
-class StackFile : VFSFile 
+class StackFile : VFSFile
 {
     private:
         ///File stack.
@@ -417,7 +414,7 @@ class StackFile : VFSFile
         {
             assert(openFile_ is null, "Trying to open a file that is already open: " ~ path);
             assert(writable, "Trying open a non-writable file for writing: " ~ path);
-                                     
+
             //Choose the file to write to - will write to the newest file that is writable.
             foreach_reverse(file; stack_) if(file.writable)
             {

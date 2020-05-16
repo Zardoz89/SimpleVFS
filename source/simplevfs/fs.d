@@ -3,10 +3,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-
-//Normal file system based VFS file/directory implementation.
-module dgamevfs.fs;
-
+/// Normal file system based VFS file/directory implementation.
+module simplevfs.fs;
 
 import core.stdc.stdio;
 
@@ -17,10 +15,9 @@ import std.path;
 import std.string;
 import std.typecons;
 
-import dgamevfs.exceptions;
-import dgamevfs.vfs;
-import dgamevfs.util;
-
+import simplevfs.exceptions;
+import simplevfs.vfs;
+import simplevfs.util;
 
 /**
  * Directory in the physical filesystem.

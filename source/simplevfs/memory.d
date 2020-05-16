@@ -3,18 +3,16 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-
-//Memory based VFS file/directory implementation used for testing.
-module dgamevfs.memory;
-
+/// Memory based VFS file/directory implementation used for testing.
+module simplevfs.memory;
 
 import std.algorithm;
 import std.exception;
 import std.typecons;
 
-import dgamevfs.exceptions;
-import dgamevfs.vfs;
-import dgamevfs.util;
+import simplevfs.exceptions;
+import simplevfs.vfs;
+import simplevfs.util;
 
 
 package:

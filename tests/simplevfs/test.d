@@ -1,22 +1,18 @@
-
 //          Copyright Ferdinand Majerech 2011 - 2012.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+/// Tests from D:GameVFS
+module simplevfs.test;
 
-module dgamevfs.test;
-
-
-import dgamevfs;
-
+import simplevfs;
 
 import std.algorithm;
 import std.file;
 import std.stdio;
 import std.traits;
 import std.typecons;
-
 
 //collectException has some kind of bug (probably lazy expressions),
 //so using this instead:
@@ -704,15 +700,20 @@ bool testFSDir()
     return true;
 }
 
+@("MemoryDir")
 unittest
 {
-    writeln("---------- ",
-            testMemoryDir() ? "SUCCESS" : "FAILURE",
-            " MemoryDir unittest ", "----------");
-    writeln("---------- ",
-            testStackDir() ? "SUCCESS" : "FAILURE",
-            " StackDir unittest ", "----------");
-    writeln("---------- ",
-            testFSDir() ? "SUCCESS" : "FAILURE",
-            " FSDir unittest ", "----------");
+    assert(testMemoryDir());
+}
+
+@("StackDir")
+unittest
+{
+    assert(testStackDir());
+}
+
+@("FsDir")
+unittest
+{
+    assert(testFSDir());
 }
