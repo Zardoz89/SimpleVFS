@@ -21,7 +21,7 @@
             "sourcePaths": ["source", "tests"],
             "dependencies": {
                 "silly": "~>1.0.2",
-                "pijamas": "~>0.3.0"
+                "pijamas": "~>0.3.4"
             }
         }
     ],
