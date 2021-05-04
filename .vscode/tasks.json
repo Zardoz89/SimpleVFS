@@ -1,0 +1,39 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "dub",
+            "run": false,
+            "force": true,
+            "compiler": "dmd",
+            "archType": "x86_64",
+            "buildType": "debug",
+            "configuration": "simplevfs",
+            "_generated": true,
+            "problemMatcher": [
+                "$dmd"
+            ],
+            "group": "build",
+            "label": "dub Rebuild simplevfs",
+            "detail": "dub build --force --compiler=dmd -a=x86_64 -b=debug -c=simplevfs"
+        },
+        {
+            "type": "dub",
+            "run": false,
+            "force": true,
+            "compiler": "dmd",
+            "archType": "x86_64",
+            "buildType": "debug",
+            "configuration": "unittest",
+            "_generated": true,
+            "problemMatcher": [
+                "$dmd"
+            ],
+            "group": "build",
+            "label": "dub Rebuild unittest",
+            "detail": "dub build --force --compiler=dmd -a=x86_64 -b=debug -c=unittest"
+        }
+    ]
+}
